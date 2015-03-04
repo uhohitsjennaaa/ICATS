@@ -10,19 +10,19 @@ Then, before you can push or pull, you have to open .git/config with the editor
 of your choice.  It should look like this:
 
 '''
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-        ignorecase = true
-        precomposeunicode = true
-[remote "origin"]
-        url = https://jwilso27@github.com/jwilso27/FundCompFinal.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
+    [core]
+    	repositoryformatversion = 0
+    	filemode = true
+    	bare = false
+    	logallrefupdates = true
+    	ignorecase = true
+    	precomposeunicode = true
+    [remote "origin"]
+    	url = https://jwilso27@github.com/jwilso27/FundCompFinal.git
+    	fetch = +refs/heads/*:refs/remotes/origin/*
+    [branch "master"]
+    	remote = origin
+    	merge = refs/heads/master
 '''
         
 Then, under remote url, change the user name to your own, but leave mine for
