@@ -18,7 +18,7 @@ of your choice.  It should look like this:
     	ignorecase = true
     	precomposeunicode = true
     [remote "origin"]
-    	url = https://jwilso27@github.com/jwilso27/FundCompFinal.git
+    	url = https://jwilso27@github.com/jwilso27/FundCompFinal.git <--
     	fetch = +refs/heads/*:refs/remotes/origin/*
     [branch "master"]
     	remote = origin
