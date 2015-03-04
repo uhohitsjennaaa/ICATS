@@ -1,8 +1,9 @@
 Hey everyone.
-Idk how good everyone is with GitHub, so I am adding instructions to clone and push to this repository.
-I haven't added any information about the project, so later we can change this to a project description.
+Idk how good everyone is with GitHub, so I am adding instructions to clone and
+push to this repository.  I haven't added any information about the project, so
+later we can change this to a project description.
 
-To clone this repository into your local GitHub folder, you have to use:
+To clone this repository into your local GitHub folder, use:
 
     git clone https://github.com/jwilso27/FundCompFinal.git
 
@@ -23,7 +24,7 @@ of your choice.  It should look like this:
     	remote = origin
     	merge = refs/heads/master
         
-Then, under remote url, change the user name to your own, but leave mine for
+Under remote url, change the user name to your own, but leave mine for
 the repository path:
 
     url = https://USERNAME@github.com/jwilso27/FundCompFinal.git
