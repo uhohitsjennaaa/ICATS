@@ -29,10 +29,13 @@ the repository path:
 After that, you should be able to push and pull.
 
 After adding or editing a file, add the file using the command:
+
     git add *
 		
 Then, to track the changes made to that version, use:
+
     git commit -m "summary of change"
 
 Finally, to push the changed file, use:
+
     git push origin master
