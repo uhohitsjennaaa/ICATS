@@ -9,7 +9,6 @@ To clone this repository into your local GitHub folder, you have to use:
 Then, before you can push or pull, you have to open .git/config with the editor
 of your choice.  It should look like this:
 
-'''
     [core]
     	repositoryformatversion = 0
     	filemode = true
@@ -23,7 +22,6 @@ of your choice.  It should look like this:
     [branch "master"]
     	remote = origin
     	merge = refs/heads/master
-'''
         
 Then, under remote url, change the user name to your own, but leave mine for
 the repository path:
