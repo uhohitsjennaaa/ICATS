@@ -25,6 +25,7 @@ of your choice.  It should look like this:
         
 Then, under remote url, change the user name to your own, but leave mine for
 the repository path:
+
     url = https://USERNAME@github.com/jwilso27/FundCompFinal.git
 
 After that, you should be able to push and pull.
