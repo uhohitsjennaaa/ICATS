@@ -17,14 +17,19 @@ class PhysicalObject {
 		float getPositionY(void);
 
 		//Functions to take movement commands, may need to be CHAR, need to understand keyboard input
-		void moveUp(int);
-		void moveDown(int);
-		void moveRight(int);
-		void moveLeft(int);
+		virtual void moveUp(int);
+		virtual void moveDown(int);
+		virtual void moveRight(int);
+		virtual void moveLeft(int);
 		
 	private: 
 		int height;
 		int width; 
+		//movement variable keys
+		int upKey;
+		int downKey;
+		int rightKey;
+		int leftKey;
 		float positionX;
 		float positionY;
 		float bounceFactor; //How much speed will be retained after the object hits a wall/boundary
