@@ -9,23 +9,20 @@
 
 class PhysicalObject {
 	public: 
-		//Constructor (height, width, start positionX, start positionY, bounce factor);
-		PhysicalObject(int = 10, int = 10, float = 30, float = 30, float = .5);
+		//Constructor (height, width, start positionX, start positionY, upkey, downkey, left key, right key, bounce factor);
+		PhysicalObject(int = 10, int = 10, float = 30, float = 30, int=0, int=1, int=2, int=3, float = .5);
 		
 		//Functions to get position of object
-		float getPositionX(void);
-		float getPositionY(void);
+		float getPosX(void);
+		float getPosY(void);
 
 		//Functions to take movement commands, may need to be CHAR, need to understand keyboard input
-		virtual void moveUp(int);
-		virtual void moveDown(int);
-		virtual void moveRight(int);
-		virtual void moveLeft(int);
+		virtual void move(void);
 		
 	private: 
 		int height;
 		int width; 
-		//movement variable keys
+		//store keys chosen to move object
 		int upKey;
 		int downKey;
 		int rightKey;
