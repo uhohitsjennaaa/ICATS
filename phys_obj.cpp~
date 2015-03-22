@@ -45,22 +45,7 @@ float PhysicalObject::getPosY(void){
 void PhysicalObject::move(void){
 	//Figure out implementation for moving, y 
 	positionY = positionY - 5;
-	
-	//Up key pressed	
-	if(key == upKey){
-		//Jump algorithm
-	}
-
-	//Right key pressed
-	if(key == rightKey){
-		positionX += 5;
-	}
-
-	//Left key pressed
-	if(key == leftKey){
-		positionX -= 5;
-	}
-	
+	if(
 }
 
 
