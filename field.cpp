@@ -13,7 +13,7 @@ playField::playField(int iHeight, int iWidth){
 
 	//fill char vector
 	for(int iCol=0; iCol<width; iCol++){
-		tempVec.push_back('.');
+		tempVec.push_back(' ');
 	}	
 	//fill rows
 	for(int iRow=0; iRow<height; iRow++){
@@ -25,7 +25,7 @@ void playField::print(void){
 	//print board
 	for(int iRow=0; iRow<height; iRow++){
 		for(int iCol=0; iCol<width; iCol++){
-			cout << vField[iRow][iCol];
+			cout << vField[iRow][iCol] << " ";
 		}
 		cout << endl;
 	}
@@ -57,6 +57,10 @@ void playField::addBorder(int thickness){
 			vField[iRow][iCol] = '#';
 		}
 	}
+
+	//Change playing dimensions of field
+	playHeight = height - thickness;
+	playWidth = width - thickness;
 	return;
 }
 
@@ -77,6 +81,17 @@ void playField::addGoal(int startRow, int startCol, int gHeight, int gWidth){
 	for(int iRow=startRow; iRow<startRow+gHeight && iRow>0 && iRow<height; iRow++){
 		for(int iCol=startCol; iCol<startCol+gWidth && iCol>0 && iCol<width; iCol++){
 			vField[iRow][iCol] = '$';
+		}
+	}
+	return;
+}
+
+//Create a new goal
+void playField::addStart(int startRow, int startCol, int sHeight, int sWidth, char playerNum){
+	//loop through area of platform and create it, check bounds also
+	for(int iRow=startRow; iRow<startRow+sHeight && iRow>0 && iRow<height; iRow++){
+		for(int iCol=startCol; iCol<startCol+sWidth && iCol>0 && iCol<width; iCol++){
+			vField[iRow][iCol] = playerNum;
 		}
 	}
 	return;
