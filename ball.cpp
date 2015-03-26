@@ -1,5 +1,6 @@
 #include <iostream>
-#include "Ball.h"
+#include "screen.h"
+#include "ball.h"
 #include "SDL/SDL.h"
 using namespace std;
 
@@ -9,7 +10,7 @@ Ball::Ball():PhysicalObject(){
   yVel=0;
   return;
 }
-
+/*
 void Ball::handle_input(){
   if(event.type == SDL_KEYDOWN){ //if a key was pressed
     switch(event.key.keysym.sym){
@@ -29,10 +30,7 @@ void Ball::handle_input(){
     }
   }
 }
-
-void Ball::show(){
-  apply_surface(x,y,dot,screen);
-}
+*/
 
 void Ball::move(void){
   positionX+=xVel;

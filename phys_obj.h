@@ -18,8 +18,8 @@ class PhysicalObject {
 
 		//Functions to take movement commands, may need to be CHAR, need to understand keyboard input
 		virtual void move(void);
-		
-	private: 
+	
+	protected: 
 		int height;
 		int width; 
 		//store keys chosen to move object
@@ -31,6 +31,6 @@ class PhysicalObject {
 		float positionY;
 		float bounceFactor; //How much speed will be retained after the object hits a wall/boundary
 
-}
+};
 
 #endif
