@@ -14,18 +14,18 @@ void Ball::handle_input(){
   if(event.type == SDL_KEYDOWN){ //if a key was pressed
     switch(event.key.keysym.sym){
     case SDLK_UP: yVel -= radius/2; break;
-    case SDLK_DOWN: += radius/2; break;
-    case SDLK_LEFT: -= radius/2; break;
-    case SDLK_RIGHT: += radius/2; break;
+    case SDLK_DOWN: yVel += radius/2; break;
+    case SDLK_LEFT: xVel -= radius/2; break;
+    case SDLK_RIGHT: yVel += radius/2; break;
     }
   }
   else if(event.type == SDL_KEYUP)
   {
     switch(event.key.keysym.sym){
     case SDLK_UP: yVel += radius/2; break;
-    case SDLK_DOWN: -= radius/2; break;
-    case SDLK_LEFT: += radius/2; break;
-    case SDLK_RIGHT: -= radius/2; break;
+    case SDLK_DOWN: yVel -= radius/2; break;
+    case SDLK_LEFT: xVel += radius/2; break;
+    case SDLK_RIGHT: xVel -= radius/2; break;
     }
   }
 }
