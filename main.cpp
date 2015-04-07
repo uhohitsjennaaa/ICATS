@@ -17,16 +17,17 @@ int main(){
 // 	SDL_Renderer* render=SDL_CreateRenderer(win,-1,SDL_RENDERER_SOFTWARE);
 
 	if(SDL_Init(SDL_INIT_VIDEO)<0){ //initialize SDL
-		printf("SDL could not initialize! SDL_Error: %s\n",SDL_GetError());
+		cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
 	}else{ //create window
 		win=SDL_CreateWindow("SDL Tutorial",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,w,h,SDL_WINDOW_SHOWN);
 		if(win==NULL){
-			printf("Window could not be created! SDL_Error: %s\n",SDL_GetError());
+			cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
 		}else{
+			surf=SDL_GetWindowSurface(win); //get surface
 			tmp=SDL_LoadBMP("b1.bmp"); //get picture
 			if(tmp==NULL){
-				SDL_FillRect(surf,NULL,SDL_MapRGB(surf->format,0,0,0)); //fill white
-				printf("Background could not be loaded! SDL_Error: %s\n",SDL_GetError());
+				SDL_FillRect(surf,NULL,SDL_MapRGB(surf->format,0,0,0)); //fill black
+				cout << "Background could not be loaded! SDL_Error: " << SDL_GetError() << endl;
 			}else{
 				SDL_BlitSurface(tmp,NULL,surf,NULL);
 			}
