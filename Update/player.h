@@ -1,6 +1,7 @@
 //Player class
 
 #include <iostream>
+#include <cmath>
 #include <string>
 using namespace std;
 
@@ -13,19 +14,26 @@ class player{
 		void moveLeft(void);
 		void moveRight(void);
 		void noMove(void);
+		void jump(void);
 		void gravity(void);
 		void updatePos(string);
 
 		//Get functions
 		float getxPos(void);
 		float getyPos(void);
+
+		//Functions to return the edges of the player, for working with arena vector
+		int returnRight(void);
+		int returnLeft(void);
+		int returnTop(void);
+		int returnBottom(void);
 		
 		float xPos;
 		float yPos;
 	private:
 
-		float jump;
 		float xVel;
+		float maxxVel;
 		float yVel;
 		float accel;
 		float dTime; 
@@ -38,8 +46,8 @@ player::player(float ixPos, float iyPos){
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
+	maxxVel = 8;
 	yVel = 0;
-	jump = 0; 
 	accel = .5;
 	dTime = 1;
 	return;
@@ -57,32 +65,54 @@ float player::getyPos(void){
 
 //Move left
 void player::moveLeft(void){
-	xVel += -1.5;
-	xPos += xVel*dTime;
-	//xVel += -(accel)*dTime;
-	//xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);
+	xVel += -(accel)*dTime;
+	if(xVel < -maxxVel){
+		xVel = -maxxVel;
+	}	
+	xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);
 }
 
 //Move right
 void player::moveRight(void){
-	xVel +=	1.5;
-	xPos += xVel*dTime;
-	//xVel += accel*dTime;
-	//xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);
+	xVel += accel*dTime;
+	if(xVel > maxxVel){
+		xVel = maxxVel;
+	}	
+	xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);
 }
 
 //Handle no input keys
 void player::noMove(void){
 	//If the velocity is negative	
-	/*if(xVel < 0){
+	if(xVel < -0.25){
 		xVel += accel*dTime;
+		if(xVel < -maxxVel){
+			xVel = -maxxVel;
+		}	
 		xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);
-	}else if(xVel > 0){
+	}else if(xVel > 0.25){ //If velocity is positive
 		xVel += -(accel)*dTime;
-		xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);
-	}*/
-	xVel = 0;
-	xPos += xVel*dTime;
+		if(xVel > maxxVel){
+			xVel = maxxVel;
+		}
+		xPos = xPos+xVel*(dTime)+.5*(accel)*(dTime*dTime);	
+	}else{
+		xVel = 0;
+		xPos = xPos;
+	}
+}
+
+int player::returnRight(void){
+	return floor((xPos+15)/10)-1;
+}
+int player::returnLeft(void){
+	return floor(xPos/10)-1;
+}
+int player::returnTop(void){
+	return floor(yPos/10)-1;
+}
+int player::returnBottom(void){
+	return floor((yPos+30)/10)-1;
 }
 
 

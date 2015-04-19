@@ -114,7 +114,7 @@ int main(){
 				P2.moveRight();
 			}
 		}	
-
+		//When players don't move 
 		P1.noMove();
 		P2.noMove();
 
