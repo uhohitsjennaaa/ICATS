@@ -132,7 +132,7 @@ int main(){
 
 		//Check bounds of player 1
 		P1.checkxBounds(tempX1);
-		
+		P2.checkxBounds(tempX2);
 		/*
 		if(arena.vField[P1.getyCenter()][P1.getEdgeRight()] == '#' || P1.getxPos() > S_WIDTH){
 			//P1.xPos = tempX1;
