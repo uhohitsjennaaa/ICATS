@@ -13,6 +13,12 @@ class PhysObj{
 		PhysObj(float = 20, float = 20);
 		
 		//get Functions
+		int getEdgeLeft(void);
+                int getEdgeRight(void);
+                int getEdgeTop(void);
+                int getEdgeBottom(void);
+		int getyCenter(void);
+		
 		float getxPos(void);
 		float getyPos(void);
 		float getxVel(void);
@@ -22,7 +28,6 @@ class PhysObj{
 		
 		void gravity(void);
 	protected: 
-		//store keys chosen to move object
 		float xPos;
 		float yPos;
 		float xVel;
@@ -32,6 +37,10 @@ class PhysObj{
 		float xAccel;
 		float yAccel;
 		float dTime;
+		
+		float width;
+		float height;
+		float windMult; //window multiplier
 };
 
 PhysObj::PhysObj(float ixPos, float iyPos){
@@ -44,8 +53,30 @@ PhysObj::PhysObj(float ixPos, float iyPos){
 	xAccel = 0.5;
 	yAccel = 0.2;
 	dTime = 1;
+	windMult = 10;
 	return;
 }
+
+int PhysObj::getEdgeLeft(){
+	return ceil(xPos/windMult)-1;
+}
+
+int PhysObj::getEdgeRight(){
+	return ceil((xPos+width)/windMult)-1;
+}
+
+int PhysObj::getEdgeTop(){
+	return ceil(yPos/windMult)-1;
+}
+
+int PhysObj::getEdgeBottom(){
+	return ceil((yPos+height)/windMult)-1;
+}
+
+inf PhysObj::getyCenter(){
+	return ceil((yPos+(height/2))/windMult)-1;
+}
+
 
 float PhysObj::getxPos(){
 	return xPos;
