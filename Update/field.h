@@ -7,8 +7,9 @@ using namespace std;
 
 class playField {
 	public:
-		playField(int iHeight=400, int iWidth=600);
+		playField(int iHeight=40, int iWidth=60);
 		void print(void);
+		void printPix(void);
 	
 		//Create playing field elements
 		//Add n-space border to field
@@ -25,9 +26,14 @@ class playField {
 		//Fields
 		void makeField1(void);
 
+		//Make pixel field
+		void pixels();
+
+		vector< vector< char> > vField;
+		vector< vector< char> > pixField;
 
 	private: 
-		vector< vector< char> > vField;
+		
 		int height;
 		int width;
 		int playHeight;
