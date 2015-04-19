@@ -1,5 +1,5 @@
 //Driver file for program, includes sdl inner workings, reads keypresses, and displays.
-
+// g++ driver.cpp field.cpp -lSDL2 -lSDL2_image
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -117,6 +117,9 @@ int main(){
 		//When players don't move 
 		P1.noMove();
 		P2.noMove();
+
+		//Check bounds of player 1
+		
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){

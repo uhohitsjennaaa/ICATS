@@ -102,7 +102,6 @@ void player::noMove(void){
 	}
 }
 
-//Functions to get the edges
 int player::returnRight(void){
 	return floor((xPos+15)/10)-1;
 }
