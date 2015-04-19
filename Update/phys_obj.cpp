@@ -1,69 +1,68 @@
-//Andrew Gnott
-//March 21, 2015
-//A base class for an object that will have be effected by physics
-//and have properties such as size, (shape?), position, and gravity
-//Function implementation file
-/*
-		PhysicalObject(int = 10, int = 10, float = 30, float = 30, float = .5);
-		
-		//Functions to get position of object
-		float getPositionX(void);
-		float getPositionY(void);
+//phys_obj.cpp
 
-		//Functions to take movement commands, may need to be CHAR, need to understand keyboard input
-		void moveUp(int);
-		void moveDown(int);
-		void moveRight(int);
-		void moveLeft(int);*/
+#include<iostream>
+#include<cmath>
+#include"phys_obj.h"
+#include"field.h"
 
-#include <iostream>
-#include "phys_obj"
-#include "SDL/SDL.h"
 using namespace std;
 
-PhysicalObject::PhysicalObject(int iHeight, int iWidth, float iX, float iY, int iUpKey, int iDownKey, int iRightKey, int iLeftKey, float iBounce){
-	height = iHeight;
-	width = iWidth; 
-	upKey = iUpKey;
-	downKey = iDownKey;
-	rightKey = iRightKey;
-	leftKey = iLeftKey;
-	positionX = iX;
-	positionY = iY;
-	bounceFactor = iBounce;
+PhysObj::PhysObj(float ixPos, float iyPos){
+	xPos = ixPos;
+	yPos = iyPos;
+	xVel = 0;
+	maxxVel = 8;
+	yVel = 0;
+	maxyVel = 8;
+	xAccel = 0.5;
+	yAccel = 0.2;
+	dTime = 1;
+	windMult = 10;
 	return;
-} 
-
-float PhysicalObject::getPosX(void){
-	return positionX;
 }
 
-float PhysicalObject::getPosY(void){
-	return positionY;
+int PhysObj::getEdgeLeft(){
+	return ceil(xPos/windMult)-1;
 }
 
-void PhysicalObject::move(void){
-	//Figure out implementation for moving, y 
-	positionY = positionY - 5;
-	
-	//Up key pressed	
-	if(key == upKey){
-		//Jump algorithm
-	}
+int PhysObj::getEdgeRight(){
+	return ceil((xPos+width)/windMult)-1;
+}
 
-	//Right key pressed
-	if(key == rightKey){
-		positionX += 5;
-	}
+int PhysObj::getEdgeTop(){
+	return ceil(yPos/windMult)-1;
+}
 
-	//Left key pressed
-	if(key == leftKey){
-		positionX -= 5;
-	}
-	
+int PhysObj::getEdgeBottom(){
+	return ceil((yPos+height)/windMult)-1;
+}
+
+int PhysObj::getyCenter(){
+	return ceil((yPos+(height/2))/windMult)-1;
 }
 
 
+float PhysObj::getxPos(){
+	return xPos;
+}
 
+float PhysObj::getyPos(){
+	return yPos;
+}
 
+float PhysObj::getxVel(){
+	return xVel;
+}
+
+float PhysObj::getyVel(){
+	return yVel;
+}
+
+float PhysObj::getxAccel(){
+	return xAccel;
+}
+
+float PhysObj::getyAccel(){
+	return yAccel;
+}
 

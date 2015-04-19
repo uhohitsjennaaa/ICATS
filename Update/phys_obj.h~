@@ -49,7 +49,6 @@ class PhysObj{
 		float width;
 		float height;
 		float windMult; //window multiplier
-		
 };
 
 

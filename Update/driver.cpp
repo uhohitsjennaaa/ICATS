@@ -6,6 +6,7 @@
 #include <cmath>
 #include "texture_handler.h"
 #include "field.h"
+#include "phys_obj.h"
 #include "player.h"
 #include <iostream>
 using namespace std;
@@ -85,8 +86,10 @@ int main(){
 	int p2_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	//Instantiate player handlers
-	player P1(p1_x, p1_y, arena);
-	player P2(p2_x, p2_y, arena);
+	player P1(p1_x, p1_y);
+        PhysObj * pP1 = &P1;
+	player P2(p2_x, p2_y);
+	PhysObj * pP2 = &P2;
 	
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	float tempX1;
@@ -96,9 +99,9 @@ int main(){
 		//Clear screen
 		renderTexture(bg,ren,0,0,S_WIDTH,S_HEIGHT);
 	
-		tempX1 = P1.xPos;
-		tempX2 = P2.xPos;
-
+		tempX1 = P1.getxPos();
+		tempX2 = P2.getxPos();
+		
 		//Handle keyboard inputs
 		while(SDL_PollEvent(&event)){
 			
@@ -125,10 +128,12 @@ int main(){
 		P2.noMove();
 
 		//Check bounds of player 1
-		if(arena.vField[P1.returnRow()][P1.returnRight()] == '#' || P1.xPos > S_WIDTH){
-			P1.xPos = tempX1;
-		}else if(arena.vField[P1.returnRow()][P1.returnLeft()] == '#' || P1.xPos < 0){
-			P1.xPos = tempX1;
+		if(arena.vField[P1.getyCenter()][P1.getEdgeRight()] == '#' || P1.getxPos() > S_WIDTH){
+			//P1.xPos = tempX1;
+			P1.setxPos(tempX1);
+		}else if(arena.vField[P1.getyCenter()][P1.getEdgeLeft()] == '#' || P1.getxPos() < 0){
+			//P1.xPos = tempX1;
+			P1.setxPos(tempX1);
 		}
 			
 
