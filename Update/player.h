@@ -27,6 +27,7 @@ class player{
 		int returnLeft(void);
 		int returnTop(void);
 		int returnBottom(void);
+		int returnRow(void);
 		
 		float xPos;
 		float yPos;
@@ -114,6 +115,9 @@ int player::returnTop(void){
 }
 int player::returnBottom(void){
 	return floor((yPos+30)/10)-1;
+}
+int player::returnRow(void){
+	return floor((yPos+15)/10)-1;
 }
 
 

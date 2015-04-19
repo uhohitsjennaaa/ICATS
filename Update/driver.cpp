@@ -119,7 +119,8 @@ int main(){
 		P2.noMove();
 
 		//Check bounds of player 1
-		
+		if(arena.vField[P1.returnRow()][P1.returnRight()] == '#'){
+			
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){
