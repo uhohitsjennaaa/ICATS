@@ -125,5 +125,3 @@ int player::returnBottom(void){
 int player::returnRow(void){
 	return floor((yPos+15)/10)-1;
 }
-
-
