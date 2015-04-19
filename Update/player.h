@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include "field.h"
 using namespace std;
 
 #ifndef PLAYER_H
@@ -10,7 +11,8 @@ using namespace std;
 
 class player{
 	public:
-		player(float = 20, float = 20);
+		player();
+		player(float, float, playField &field);
 		void moveLeft(void);
 		void moveRight(void);
 		void noMove(void);
@@ -32,7 +34,7 @@ class player{
 		float xPos;
 		float yPos;
 	private:
-
+		playField arena;
 		float xVel;
 		float maxxVel;
 		float yVel;
@@ -43,11 +45,14 @@ class player{
 #endif
 
 //Constructor
-player::player(float ixPos, float iyPos){
+player::player(float ixPos, float iyPos, playField &field){
+	//Initialize arena
+	arena = field;
+
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
-	maxxVel = 8;
+	maxxVel = 6;
 	yVel = 0;
 	accel = .5;
 	dTime = 1;
@@ -101,14 +106,15 @@ void player::noMove(void){
 		xVel = 0;
 		xPos = xPos;
 	}
+	cout << arena.vField[0][0];
 }
 
 //Functions to get the edges
 int player::returnRight(void){
-	return floor((xPos+15)/10)-1;
+	return ceil((xPos+15)/10)-1;
 }
 int player::returnLeft(void){
-	return floor(xPos/10)-1;
+	return ceil(xPos/10)-1;
 }
 int player::returnTop(void){
 	return floor(yPos/10)-1;

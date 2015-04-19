@@ -85,17 +85,23 @@ int main(){
 	int p2_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	//Instantiate player handlers
-	player P1(p1_x, p1_y);
-	player P2(p2_x, p2_y);
+	player P1(p1_x, p1_y, arena);
+	player P2(p2_x, p2_y, arena);
 	
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
+	float tempX1;
+	float tempX2;
 
 	while(!quit){
 		//Clear screen
 		renderTexture(bg,ren,0,0,S_WIDTH,S_HEIGHT);
+	
+		tempX1 = P1.xPos;
+		tempX2 = P2.xPos;
 
 		//Handle keyboard inputs
 		while(SDL_PollEvent(&event)){
+			
 			//quit if user presses escape
 			if(/*event.key.keysym.sym == */ keys[SDL_SCANCODE_ESCAPE]){
 				quit = 1;
@@ -119,7 +125,11 @@ int main(){
 		P2.noMove();
 
 		//Check bounds of player 1
-		if(arena.vField[P1.returnRow()][P1.returnRight()] == '#'){
+		if(arena.vField[P1.returnRow()][P1.returnRight()] == '#' || P1.xPos > S_WIDTH){
+			P1.xPos = tempX1;
+		}else if(arena.vField[P1.returnRow()][P1.returnLeft()] == '#' || P1.xPos < 0){
+			P1.xPos = tempX1;
+		}
 			
 
 		//Draw the tiles by using the vector fields
