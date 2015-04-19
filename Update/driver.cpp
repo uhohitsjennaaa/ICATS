@@ -8,15 +8,18 @@
 #include "field.h"
 #include "phys_obj.h"
 #include "player.h"
+#include "constants.h"
 #include <iostream>
 using namespace std;
 
 //Size of window and background pieces
+/*
 const int S_WIDTH = 600;
 const int S_HEIGHT = 400;
 const int TILE_SIZE = 10;
 const int P_WIDTH = 15;
 const int P_HEIGHT = 30;
+*/
 
 int main(){
 	//initialize SDL	
@@ -86,9 +89,9 @@ int main(){
 	int p2_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	//Instantiate player handlers
-	player P1(p1_x, p1_y);
+	player P1(p1_x, p1_y, arena);
         PhysObj * pP1 = &P1;
-	player P2(p2_x, p2_y);
+	player P2(p2_x, p2_y, arena);
 	PhysObj * pP2 = &P2;
 	
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
@@ -128,6 +131,9 @@ int main(){
 		P2.noMove();
 
 		//Check bounds of player 1
+		P1.checkxBounds(tempX1);
+		
+		/*
 		if(arena.vField[P1.getyCenter()][P1.getEdgeRight()] == '#' || P1.getxPos() > S_WIDTH){
 			//P1.xPos = tempX1;
 			P1.setxPos(tempX1);
@@ -135,7 +141,7 @@ int main(){
 			//P1.xPos = tempX1;
 			P1.setxPos(tempX1);
 		}
-			
+		*/	
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){

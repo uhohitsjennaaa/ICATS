@@ -4,6 +4,7 @@
 #include<iostream>
 #include<cmath>
 #include "field.h"
+#include "constants.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ using namespace std;
 class PhysObj{
 	public: 
 		//Constructor
-		PhysObj(float = 20, float = 20);
+		PhysObj(float, float, playField &);
 		
 		//get Functions
 		virtual int getEdgeLeft(void);
@@ -32,6 +33,7 @@ class PhysObj{
 		virtual void setxPos(float);
 		virtual void setyPos(float);
 		
+		virtual void checkxBounds(float);
 		//virtual void gravity(void);
 	protected:
 		playField arena;
@@ -53,7 +55,7 @@ class PhysObj{
 };
 
 
-PhysObj::PhysObj(float ixPos, float iyPos){
+PhysObj::PhysObj(float ixPos, float iyPos, playField &field){
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
@@ -64,6 +66,7 @@ PhysObj::PhysObj(float ixPos, float iyPos){
 	yAccel = 0.2;
 	dTime = 1;
 	windMult = 10;
+	arena = field;
 	return;
 }
 
@@ -118,6 +121,14 @@ void PhysObj::setxPos(float x){
 
 void PhysObj::setyPos(float y){
 	yPos = y;
+}
+
+void PhysObj::checkxBounds(float tempX){
+	if(arena.vField[getyCenter()][getEdgeRight()] == '#'
+	|| arena.vField[getyCenter()][getEdgeLeft()] == '#'
+	|| getxPos() > S_WIDTH
+	|| getxPos() < 0)
+		setxPos(tempX);
 }
 
 #endif

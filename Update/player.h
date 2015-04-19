@@ -5,6 +5,7 @@
 #include <string>
 #include "phys_obj.h"
 #include "field.h"
+#include "constants.h"
 using namespace std;
 
 #ifndef PLAYER_H
@@ -12,7 +13,7 @@ using namespace std;
 
 class player: public PhysObj{
 	public:
-		player(float = 20, float = 20);
+		player(float, float, playField &);
 		void moveLeft(void);
 		void moveRight(void);
 		void noMove(void);
@@ -23,7 +24,7 @@ class player: public PhysObj{
 #endif
 
 //Constructor
-player::player(float ixPos, float iyPos) : PhysObj(ixPos, iyPos){
+player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, arena){
 	width = 15;
 	height = 30;
 	return;
