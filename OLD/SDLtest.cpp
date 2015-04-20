@@ -27,7 +27,7 @@ int main(){
 		}else{
 			surf=SDL_GetWindowSurface(win); //get surface
 			SDL_FillRect(surf,NULL,SDL_MapRGB(surf->format,255,255,255)); //fill white
-			tmp=SDL_LoadBMP("b4.bmp"); //get picture
+			tmp=SDL_LoadBMP("test.bmp"); //get picture
 			if(tmp==NULL){
 				cout << "Background could not be loaded! SDL_Error: " << SDL_GetError() << endl;
 			}else{
