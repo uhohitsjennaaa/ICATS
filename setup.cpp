@@ -71,7 +71,7 @@ string setup::background(){
 	ostringstream os;
  	int r;
  	//r=rand()%24+2; 
-	r=0; //err: 0,1; edit?: 4,6,9,14,16,18,20,25
+	r=30;
 	
 	os << imPath << bgPath << "b" << r << imExt;
 	string s=os.str();
@@ -86,7 +86,7 @@ void setup::makeFieldSurf(){
 
 	//get field info
 	playField arena(S_HEIGHT,S_WIDTH,TILE_SIZE);
-	v2 vField=arena.setField();
+	arena.setField();
 	v2 vField=arena.getField();
 
 	//SDL_Rect to add field elements
@@ -117,8 +117,8 @@ void setup::makeFieldSurf(){
 			for(int iCol = 0; iCol < S_WIDTH/TILE_SIZE; iCol++){
 				tmpRect.x=iCol*TILE_SIZE;
 				if(vField[iRow][iCol] == '#') SDL_BlitSurface(tSurf[0],NULL,surf,&tmpRect); //add tile
-				else if(vField[iRow][iCol] == '$') SDL_BlitSurface(tSurf[1],NULL,surf,&tmpRect); //make goal1
-				else if(vField[iRow][iCol] == '%') SDL_BlitSurface(tSurf[2],NULL,surf,&tmpRect); //make goal2
+				//else if(vField[iRow][iCol] == '$') SDL_BlitSurface(tSurf[1],NULL,surf,&tmpRect); //make goal1
+				//else if(vField[iRow][iCol] == '%') SDL_BlitSurface(tSurf[2],NULL,surf,&tmpRect); //make goal2
 			} //end for(int iCol = 0; iCol < width; iCol++)
 		} //end for (int iRow = 0; iRow < height; iRow++)
 	} //end if(tmp==NULL)...else

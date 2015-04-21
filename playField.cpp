@@ -106,20 +106,24 @@ void playField::mirror(){
 }*/
 
 void playField::setField(){
-	addGoal(8,8,6,6); //create goal
+	addGoal(8,1,6,6); //create goal
 
-	//Add goal surrounding platforms
-	addPlatform(14,6,2,10);
-	addPlatform(6,6,2,10);
-	addPlatform(8,6,6,2);
+	//Add platforms surrounding goal
+	addPlatform(7,1,1,7);
+	addPlatform(14,1,1,7);
+	addPlatform(8,7,1,1);
+	addPlatform(13,7,1,1);
+	
+// 	//Add middle top
+// 	addPlatform(2,28,10,1);
+// 	addPlatform(10,24,1,4);
 
-	//Add middle top
-	addPlatform(2,28,10,2);
-	addPlatform(10,24,2,4);
-
-	addPlatform(20,20,2,10); //Add middle floor
-	addPlatform(28,8,2,10); //Add bottom floor
-	addBorder(2); //Add border
+	addPlatform(18,21,1,9); //Add top floor
+	addPlatform(23,5,1,9); //Add middle floor
+	addPlatform(28,25,1,5); //Add middle floor
+	addPlatform(33,15,1,8); //Add bottom floor
+	
+	addBorder(1); //Add border
 	mirror(); //mirror
 	
 // 	pixels();
