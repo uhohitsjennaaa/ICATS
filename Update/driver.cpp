@@ -120,6 +120,14 @@ int main(){
 		if(keys[SDL_SCANCODE_W]){
 			P1.jump();
 		}
+		//If left and throw
+		if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_S]){
+			ball.throwLeft(1);
+		}
+		//If throw right
+		if(keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_S]){
+			ball.throwRight(1);
+		}
 		//P1 latency, no movement updater. 
 		//User basically controls 1/2 frames 
 		P1.noMove();
@@ -137,6 +145,14 @@ int main(){
 		//Jump (I)
 		if(keys[SDL_SCANCODE_I]){
 			P2.jump();
+		}
+		//If left and throw
+		if(keys[SDL_SCANCODE_J] && keys[SDL_SCANCODE_K]){
+			ball.throwLeft(2);
+		}
+		//If throw right
+		if(keys[SDL_SCANCODE_L] && keys[SDL_SCANCODE_K]){
+			ball.throwRight(2);
 		}
 		//P2 latency, no movement updater. 
 		P2.noMove();
