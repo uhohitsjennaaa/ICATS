@@ -52,6 +52,7 @@ int main(){
 	string goal2_tile = "images/goal2.bmp";
 	string figure1 = "images/dude1_small.bmp";
 	string figure2 = "images/dude2_small.bmp";
+	string ball_img = "images/ball.bmp";
 
 	//Create texture for background, and goals
 	SDL_Texture *bg = IMG_LoadTexture(ren, bg_image.c_str());
@@ -60,6 +61,7 @@ int main(){
 	SDL_Texture *goal2 = IMG_LoadTexture(ren, goal2_tile.c_str());
 	SDL_Texture *player1 = IMG_LoadTexture(ren, figure1.c_str());
 	SDL_Texture *player2 = IMG_LoadTexture(ren, figure2.c_str());
+	SDL_Texture *ball = IMG_LoadTexture(ren, ball_img.c_str());
 
 
 	//Initialize playing field
@@ -95,16 +97,11 @@ int main(){
 	PhysObj * pP2 = &P2;
 	
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
-	float tempX1;
-	float tempX2;
 
 	while(!quit){
 		//Clear screen
 		renderTexture(bg,ren,0,0,S_WIDTH,S_HEIGHT);
-	
-		tempX1 = P1.getxPos();
-		tempX2 = P2.getxPos();
-		
+
 		//Handle keyboard inputs
 		while(SDL_PollEvent(&event)){
 			
@@ -112,11 +109,14 @@ int main(){
 			if(/*event.key.keysym.sym == */ keys[SDL_SCANCODE_ESCAPE]){
 				quit = 1;
 			}
-			//p1 move right
+			//p1 controls
 			if(keys[SDL_SCANCODE_D]){
 				P1.moveRight();
 			}else if(keys[SDL_SCANCODE_A]){
 				P1.moveLeft();
+			}
+			if(keys[SDL_SCANCODE_W]){
+				P1.jump();
 			}
 
 			//p2 move left
@@ -130,18 +130,15 @@ int main(){
 		P1.noMove();
 		P2.noMove();
 
-		//Check bounds of player 1
-		P1.checkxBounds(tempX1);
-		P2.checkxBounds(tempX2);
-		/*
-		if(arena.vField[P1.getyCenter()][P1.getEdgeRight()] == '#' || P1.getxPos() > S_WIDTH){
-			//P1.xPos = tempX1;
-			P1.setxPos(tempX1);
-		}else if(arena.vField[P1.getyCenter()][P1.getEdgeLeft()] == '#' || P1.getxPos() < 0){
-			//P1.xPos = tempX1;
-			P1.setxPos(tempX1);
-		}
-		*/	
+		//Check bounds of players
+		P1.checkxBounds();
+		P2.checkxBounds();
+		P1.checkyBounds();
+		P2.checkyBounds();
+
+		//Draw players
+		renderTexture(player1,ren,P1.getxPos(),P1.getyPos(),P_WIDTH,P_HEIGHT);
+		renderTexture(player2,ren,P2.getxPos(),p2_y,P_WIDTH,P_HEIGHT);
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){
@@ -155,9 +152,6 @@ int main(){
 				}
 			}
 		}
-		//Draw players
-		renderTexture(player1,ren,P1.getxPos(),p1_y,P_WIDTH,P_HEIGHT);
-		renderTexture(player2,ren,P2.getxPos(),p2_y,P_WIDTH,P_HEIGHT);
 
 		//Finish up
 		SDL_RenderPresent(ren);

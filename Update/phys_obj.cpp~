@@ -11,7 +11,7 @@ PhysObj::PhysObj(float ixPos, float iyPos){
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
-	maxxVel = 6;
+	maxxVel = 8;
 	yVel = 0;
 	maxyVel = 8;
 	xAccel = 0.5;

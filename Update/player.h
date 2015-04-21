@@ -24,7 +24,7 @@ class player: public PhysObj{
 #endif
 
 //Constructor
-player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, arena){
+player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, width, height, arena){
 	width = 15;
 	height = 30;
 	return;
@@ -67,5 +67,13 @@ void player::noMove(void){
 		xVel = 0;
 		xPos = xPos;
 	}
-	cout << arena.vField[0][0];
+	gravity();
+}
+
+void player::jump(void){
+	if(inAir == 0){
+		yVel -= 10;
+		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
+		inAir = 1;
+	}
 }
