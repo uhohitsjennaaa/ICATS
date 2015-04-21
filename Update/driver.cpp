@@ -130,10 +130,6 @@ int main(){
 		P1.checkyBounds();
 		P2.checkyBounds();
 
-		//Draw players
-		renderTexture(player1,ren,P1.getxPos(),P1.getyPos(),P_WIDTH,P_HEIGHT);
-		renderTexture(player2,ren,P2.getxPos(),p2_y,P_WIDTH,P_HEIGHT);
-
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){
 			for(int iCol = 0; iCol < S_WIDTH / 10; iCol++){
@@ -146,6 +142,11 @@ int main(){
 				}
 			}
 		}
+
+		//Draw players
+		renderTexture(player1,ren,P1.getxPos(),P1.getyPos(),P_WIDTH,P_HEIGHT);
+		renderTexture(player2,ren,P2.getxPos(),p2_y,P_WIDTH,P_HEIGHT);
+
 
 		//Finish up
 		SDL_RenderPresent(ren);

@@ -70,10 +70,13 @@ void player::noMove(void){
 	gravity();
 }
 
+//Jump function
 void player::jump(void){
-	if(inAir == 0){
+	//Allow jump if player is not in air from a previous jump	
+	if(jumped == 0){
+		//give initial yVelocity 
 		yVel -= 15;
 		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
-		inAir = 1;
+		jumped = 1;
 	}
 }
