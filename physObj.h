@@ -13,45 +13,50 @@ using namespace std;
 
 class PhysObj{
 	public: 
-		//Constructor
-		PhysObj(float, float, playField &);
+		PhysObj(); //Constructor
+		
+		void move(); //moves left and right
+		void noMove(); //Handle no input keys
+		void jump();
 		
 		//get Functions
+		void setPos(float,float);
+		void setVel(float,float);
+		void setAcc(float,float);
+/*		
+		void setxVel(float);
+		void setyVel(float);
+		void setxAccel(float);
+		void setyAccel(float);
+		
 		virtual int getEdgeLeft(void);
 		virtual int getEdgeRight(void);
 		virtual int getEdgeTop(void);
 		virtual int getEdgeBottom(void);
 		virtual int getyCenter(void);
 		
-		virtual float getxPos(void);
-		virtual float getyPos(void);
-		virtual float getxVel(void);
-		virtual float getyVel(void);
-		virtual float getxAccel(void);
-		virtual float getyAccel(void);
-		
-		virtual void setxPos(float);
-		virtual void setyPos(float);
-		
 		virtual void checkxBounds(float);
-		//virtual void gravity(void);
-		
+		virtual void gravity(void);
+*/	
 	protected:
-		playField arena;
-		
+// 		playField arena;
 		float xPos;
 		float yPos;
 		float xVel;
-		float maxxVel;
 		float yVel;
-		float maxyVel;
-		float xAccel;
-		float yAccel;
+		float xAcc;
+		float yAcc;
 		float dTime;
-		
-		float width;
-		float height;
-		float windMult; //window multiplier
+	
+	private:
+		int width;
+		int height;
+		int windMult; //window multiplier
+		int min;
+		int maxY;
+		int maxY;
+		float maxVel;
+		float maxAcc;
 };
 
 
@@ -59,13 +64,60 @@ PhysObj::PhysObj(){
 	xPos = 0;
 	yPos = 0;
 	xVel = 0;
-	maxxVel = 8;
 	yVel = 0;
-	maxyVel = 8;
-	xAccel = 0.5;
-	yAccel = 0.2;
+	xAcc = 0.5;
+	yAcc = 0.2;
+	maxVel = 8;
+	maxAcc = 1;
+	
 	dTime = 1;
+	width = 600;
+	height = 400;
 	windMult = 10;
+	min = windMult;
+	maxX = width-windMult;
+	maxY = height-windMult;
+}
+
+void PhysObj()::move(){
+	xVel += xAccel*dTime;
+	if(xVel < -maxVel) xVel = -maxVel;
+	else if(xVel > maxVel) xVel = maxVel;
+	xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
+}
+
+void PhysObj()::noMove(){
+	if(xVel < -0.25){ //If the velocity is negative
+		xVel += xAccel*dTime;
+		if(xVel < -maxVel) xVel = -maxVel;
+		xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
+	}else if(xVel > 0.25){ //If velocity is positive
+		xVel += -(xAccel)*dTime;
+		if(xVel > maxVel) xVel = maxVel;
+		xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);	
+	}else xVel = 0;
+}
+
+void PhysObj()::setPos(float x,float y){
+	if(!(x > maxX || x < min)) xPos = x;
+	if(!(y > maxY || y < min)) yPos = y;
+}
+
+void PhysObj()::setVel(float x,float y){
+	if(!(x > maxVel || x < -maxVel)) xVel = x;
+	if(!(y > maxVel || y < -maxVel)) yVel = y;
+}
+
+void PhysObj()::setAcc(float x,float y){
+	if(!(x > maxAcc || x < -maxAcc)) xVel = x;
+	if(!(y > maxAcc || y < -maxAcc)) yVel = y;
+}
+
+/*
+void PhysObj()::moveRight(){
+	xVel += xAccel*dTime;
+	if(xVel > maxxVel) xVel = maxxVel;
+	xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
 }
 
 int PhysObj::getEdgeLeft(){
@@ -127,5 +179,6 @@ void PhysObj::checkxBounds(float tempX){
 	|| getxPos() < 0)
 	setxPos(tempX);
 }
+*/
 
 #endif
