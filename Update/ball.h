@@ -32,10 +32,9 @@ class ball: public PhysObj{
 #endif
 
 //Constructor
-ball::ball(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .75, width, height, arena){
+ball::ball(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .75, 10, 10, arena){
+	//Seed random generator
 	srand(time(NULL));
-	width = 10;
-	height = 10;
 	p1Held = 0;
 	p2Held = 0;
 	allowHold = 1;
@@ -61,11 +60,13 @@ void ball::throwLeft(int thrower){
 		xVel = ((rand() % 50 + 200) / 10.0)*-1;
 		yVel = ((rand() % 50 + 100) / 10.0)*-1;
 		p1Held = 0;
+		p2Held = 0;
 		allowHold = 0;
 		holdCount = 0;
 	}else if(p2Held && thrower == 2){
 		xVel = ((rand() % 50 + 200) / 10.0)*-1;
 		yVel = ((rand() % 50 + 100) / 10.0)*-1;
+		p1Held = 0;		
 		p2Held = 0;
 		allowHold = 0;
 		holdCount = 0;
@@ -77,11 +78,13 @@ void ball::throwRight(int thrower){
 		xVel = ((rand() % 50 + 200) / 10.0);
 		yVel = ((rand() % 50 + 100) / 10.0)*-1;
 		p1Held = 0;
+		p2Held = 0;
 		allowHold = 0;
 		holdCount = 0;
 	}else if(p2Held && thrower == 2){
 		xVel = ((rand() % 50 + 200) / 10.0);
 		yVel = ((rand() % 50 + 100) / 10.0)*-1;
+		p1Held = 0;		
 		p2Held = 0;
 		allowHold = 0;
 		holdCount = 0;
@@ -116,8 +119,8 @@ void ball::Update(float xPos1, float yPos1, float xPos2, float yPos2){
 		yPos = yPos2;
 	}else{
 		xMove();
-		gravity();
 		checkxBounds();
+		gravity();
 		checkyBounds();
 		if(holdCount++ > 20){
 			allowHold = 1;

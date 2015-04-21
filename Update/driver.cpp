@@ -76,7 +76,7 @@ int main(){
 	int quit = 0;
 
 	//initial player positions
-	int p1_x = 2*TILE_SIZE;
+	int p1_x = 5*TILE_SIZE;
 	int p1_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	int p2_x = S_WIDTH-2*TILE_SIZE;
