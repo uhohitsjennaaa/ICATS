@@ -24,7 +24,7 @@ class player: public PhysObj{
 #endif
 
 //Constructor
-player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, width, height, arena){
+player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .25, width, height, arena){
 	width = 15;
 	height = 30;
 	return;

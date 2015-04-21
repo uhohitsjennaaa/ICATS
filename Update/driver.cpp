@@ -8,6 +8,7 @@
 #include "field.h"
 #include "phys_obj.h"
 #include "player.h"
+#include "ball.h"
 #include "constants.h"
 #include <iostream>
 using namespace std;
@@ -52,7 +53,7 @@ int main(){
 	SDL_Texture *goal2 = IMG_LoadTexture(ren, goal2_tile.c_str());
 	SDL_Texture *player1 = IMG_LoadTexture(ren, figure1.c_str());
 	SDL_Texture *player2 = IMG_LoadTexture(ren, figure2.c_str());
-	SDL_Texture *ball = IMG_LoadTexture(ren, ball_img.c_str());
+	SDL_Texture *ball_tex = IMG_LoadTexture(ren, ball_img.c_str());
 
 
 	//Initialize playing field
@@ -82,10 +83,15 @@ int main(){
 	int p2_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	//Instantiate player handlers
-	player P1(p1_x, p1_y, arena);
-        PhysObj * pP1 = &P1;
+	//player P1(p1_x, p1_y, arena);
+	player P1(p1_x, p1_y, arena);  
+	PhysObj * pP1 = &P1;
 	player P2(p2_x, p2_y, arena);
 	PhysObj * pP2 = &P2;
+	ball ball(200,200,arena);
+	PhysObj * pBall = &ball;
+
+	//Instantiate ball handler
 
 	while(!quit){
 		//Clear screen
@@ -97,31 +103,42 @@ int main(){
 		//Handle keyboard inputs
 		SDL_PollEvent(&event);
 		
-			//quit if user presses escape
-			if(keys[SDL_SCANCODE_ESCAPE]){
-				quit = 1;
-			}
+		//quit if user presses escape
+		if(keys[SDL_SCANCODE_ESCAPE]){
+			quit = 1;
+		}
 
-			//p1 controls
-			if(keys[SDL_SCANCODE_D]){
-				P1.moveRight();
-			}else if(keys[SDL_SCANCODE_A]){
-				P1.moveLeft();
-			}
-			if(keys[SDL_SCANCODE_W]){
-				P1.jump();
-			}
-			P1.noMove();
-			//p2 move left
-			if(keys[SDL_SCANCODE_J]){
-				P2.moveLeft();			
-			}
-			if(keys[SDL_SCANCODE_L]){
-				P2.moveRight();
-			}
+		//Player 1 controls
+		//Right movement (D)
+		if(keys[SDL_SCANCODE_D]){
+			P1.moveRight();
+		//Left movement (A)
+		}else if(keys[SDL_SCANCODE_A]){
+			P1.moveLeft();
+		}
+		//Jump (M)
+		if(keys[SDL_SCANCODE_W]){
+			P1.jump();
+		}
+		//P1 latency, no movement updater. 
+		//User basically controls 1/2 frames 
+		P1.noMove();
 
 
-		//When players don't move 
+		//Player 1 controls
+		//Right movement (J)
+		if(keys[SDL_SCANCODE_J]){
+			P2.moveLeft();			
+		}
+		//Left movement (L)
+		if(keys[SDL_SCANCODE_L]){
+			P2.moveRight();
+		}
+		//Jump (I)
+		if(keys[SDL_SCANCODE_I]){
+			P2.jump();
+		}
+		//P2 latency, no movement updater. 
 		P2.noMove();
 
 		//Check bounds of players
@@ -129,6 +146,9 @@ int main(){
 		P2.checkxBounds();
 		P1.checkyBounds();
 		P2.checkyBounds();
+	
+		//Ball movement
+		ball.Update(P1.getxPos(), P1.getyPos(), P2.getxPos(), P2.getyPos());
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){
@@ -145,8 +165,10 @@ int main(){
 
 		//Draw players
 		renderTexture(player1,ren,P1.getxPos(),P1.getyPos(),P_WIDTH,P_HEIGHT);
-		renderTexture(player2,ren,P2.getxPos(),p2_y,P_WIDTH,P_HEIGHT);
+		renderTexture(player2,ren,P2.getxPos(),P2.getyPos(),P_WIDTH,P_HEIGHT);
 
+		//Draw Ball
+		renderTexture(ball_tex,ren,ball.getxPos(),ball.getyPos(),10,10);
 
 		//Finish up
 		SDL_RenderPresent(ren);

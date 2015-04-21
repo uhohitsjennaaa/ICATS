@@ -24,7 +24,7 @@ class player: public PhysObj{
 #endif
 
 //Constructor
-player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, width, height, arena){
+player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .5, width, height, arena){
 	width = 15;
 	height = 30;
 	return;
@@ -32,11 +32,11 @@ player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPo
 
 //Move left
 void player::moveLeft(void){
-	xVel += -(xAccel)*dTime;
+	xVel -= xAccel*dTime;
 	if(xVel < -maxxVel){
 		xVel = -maxxVel;
 	}	
-	xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
+	xPos = xPos+xVel*(dTime)-.5*(xAccel/5.0)*(dTime*dTime);
 }
 
 //Move right
@@ -45,24 +45,24 @@ void player::moveRight(void){
 	if(xVel > maxxVel){
 		xVel = maxxVel;
 	}	
-	xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
+	xPos = xPos+xVel*(dTime)+.5*(xAccel/5.0)*(dTime*dTime);
 }
 
 //Handle no input keys
 void player::noMove(void){
 	//If the velocity is negative	
-	if(xVel < -0.25){
-		xVel += xAccel*dTime;
+	if(xVel < -1){
+		xVel += (xAccel/5.0)*dTime;
 		if(xVel < -maxxVel){
 			xVel = -maxxVel;
 		}	
-		xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
-	}else if(xVel > 0.25){ //If velocity is positive
-		xVel += -(xAccel)*dTime;
+		xPos = xPos+xVel*(dTime)+.5*(xAccel/5.0)*(dTime*dTime);
+	}else if(xVel > 1){ //If velocity is positive
+		xVel -= (xAccel/5.0)*dTime;
 		if(xVel > maxxVel){
 			xVel = maxxVel;
 		}
-		xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);	
+		xPos = xPos+xVel*(dTime)-.5*(xAccel/5.0)*(dTime*dTime);	
 	}else{
 		xVel = 0;
 		xPos = xPos;
@@ -70,10 +70,13 @@ void player::noMove(void){
 	gravity();
 }
 
+//Jump function
 void player::jump(void){
-	if(inAir == 0){
-		yVel -= 8;
+	//Allow jump if player is not in air from a previous jump	
+	if(jumped == 0){
+		//give initial yVelocity 
+		yVel -= 15;
 		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
-		inAir = 1;
+		jumped = 1;
 	}
 }

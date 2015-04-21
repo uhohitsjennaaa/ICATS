@@ -14,7 +14,7 @@ using namespace std;
 class PhysObj{
 	public: 
 		//Constructor
-		PhysObj(float, float, int, int, playField &);
+		PhysObj(float, float, float, int, int, playField &);
 		
 		//get Functions
 		virtual int getEdgeLeft(void);
@@ -50,6 +50,7 @@ class PhysObj{
 		float yAccel;
 		float dTime;
 			
+		float bounceFactor;
 		int jumped;
 
 		int width;
@@ -59,7 +60,7 @@ class PhysObj{
 };
 
 
-PhysObj::PhysObj(float ixPos, float iyPos, int iwidth, int iheight, playField &field){
+PhysObj::PhysObj(float ixPos, float iyPos, float bounce, int iwidth, int iheight, playField &field){
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
@@ -70,6 +71,7 @@ PhysObj::PhysObj(float ixPos, float iyPos, int iwidth, int iheight, playField &f
 	yAccel = 1;
 	dTime = 1;
 	jumped = 0;
+	bounceFactor = bounce;
 	windMult = 10;
 	width = iwidth;
 	height = iheight;
@@ -140,7 +142,7 @@ void PhysObj::checkxBounds(void){
 		for(int i=getEdgeLeft(); i<getEdgeLeft()+5; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
-				xVel *= -1;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -149,7 +151,7 @@ void PhysObj::checkxBounds(void){
 		for(int i=0; i<5; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
-				xVel *= -1;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -158,7 +160,7 @@ void PhysObj::checkxBounds(void){
 		for(int i=getEdgeRight(); i>getEdgeRight()-5; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
-				xVel *= -1;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -167,7 +169,7 @@ void PhysObj::checkxBounds(void){
 		for(int i=(S_WIDTH/windMult-1); i>((S_WIDTH/windMult)-1)-5; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
-				xVel *= -1;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -180,7 +182,7 @@ void PhysObj::checkyBounds(void){
 		for(int i=getEdgeBottom(); i>getEdgeBottom()-5; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
-				yVel = 0;
+				yVel *= -bounceFactor;
 				jumped = 0;
 				break;
 			}
@@ -190,7 +192,7 @@ void PhysObj::checkyBounds(void){
 		for(int i=(S_HEIGHT / 10); i>(S_HEIGHT / 10)-5; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
-				yVel = 0; 
+				yVel *= -bounceFactor; 
 				jumped = 0;
 				break;
 			}
@@ -199,7 +201,7 @@ void PhysObj::checkyBounds(void){
 	}else if(arena.vField[getEdgeTop()][getxCenter()] == '#'){
 		for(int i=getEdgeTop(); i<getEdgeTop()+5; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
-				yVel *= -.25;
+				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
 				break;
 			}
@@ -208,7 +210,7 @@ void PhysObj::checkyBounds(void){
 	}else if(yPos < 0){
 		for(int i=0; i<5; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
-				yVel *= -.25;
+				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
 				break;
 			}

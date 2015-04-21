@@ -14,7 +14,7 @@ using namespace std;
 class PhysObj{
 	public: 
 		//Constructor
-		PhysObj(float, float, int, int, playField &);
+		PhysObj(float, float, float, int, int, playField &);
 		
 		//get Functions
 		virtual int getEdgeLeft(void);
@@ -50,7 +50,8 @@ class PhysObj{
 		float yAccel;
 		float dTime;
 			
-		int inAir;
+		float bounceFactor;
+		int jumped;
 
 		int width;
 		int height;
@@ -59,17 +60,18 @@ class PhysObj{
 };
 
 
-PhysObj::PhysObj(float ixPos, float iyPos, int iwidth, int iheight, playField &field){
+PhysObj::PhysObj(float ixPos, float iyPos, float bounce, int iwidth, int iheight, playField &field){
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
-	maxxVel = 8;
+	maxxVel = 7;
 	yVel = 0;
-	maxyVel = 8;
-	xAccel = 0.5;
-	yAccel = 0.5;
+	maxyVel = 6;
+	xAccel = 3; //0.75;
+	yAccel = 1;
 	dTime = 1;
-	inAir = 0;
+	jumped = 0;
+	bounceFactor = bounce;
 	windMult = 10;
 	width = iwidth;
 	height = iheight;
@@ -140,31 +142,34 @@ void PhysObj::checkxBounds(void){
 		for(int i=getEdgeLeft(); i<getEdgeLeft()+5; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
-				xVel *= -1;
+				xVel *= -bounceFactor*2;
 				break;
 			}
 		}
+	//If object is off left of screen
 	}else if(xPos < 0){
 		for(int i=0; i<5; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
-				xVel *= -1;
+				xVel *= -bounceFactor*2;
 				break;
 			}
 		}
+	//If player runs into '#' on his right
 	}else if(arena.vField[getyCenter()][getEdgeRight()] == '#'){
 		for(int i=getEdgeRight(); i>getEdgeRight()-5; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
-				xVel *= -1;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
+	//If object goes beyond screen width
 	}else if(xPos > S_WIDTH){
 		for(int i=(S_WIDTH/windMult-1); i>((S_WIDTH/windMult)-1)-5; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
-				xVel *= -1;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -172,21 +177,50 @@ void PhysObj::checkxBounds(void){
 }
 
 void PhysObj::checkyBounds(void){
-	//Check player's bottom edge, at border
+	//Check object's bottom edge, at '#'
 	if(arena.vField[getEdgeBottom()][getxCenter()] == '#'){
 		for(int i=getEdgeBottom(); i>getEdgeBottom()-5; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
-				yVel = 0;
-				inAir = 0;
+				yVel *= -bounceFactor;
+				jumped = 0;
+				break;
+			}
+		}
+	//Off the bottom
+	}else if(yPos > S_HEIGHT){
+		for(int i=(S_HEIGHT / 10); i>(S_HEIGHT / 10)-5; i--){
+			if(arena.vField[i][getxCenter()] != '#'){
+				yPos = i*TILE_SIZE-(height-TILE_SIZE);
+				yVel *= -bounceFactor; 
+				jumped = 0;
+				break;
+			}
+		}
+	//check top of object, at '#'
+	}else if(arena.vField[getEdgeTop()][getxCenter()] == '#'){
+		for(int i=getEdgeTop(); i<getEdgeTop()+5; i++){
+			if(arena.vField[i][getxCenter()] != '#'){
+				yVel *= -bounceFactor;
+				yPos = i*TILE_SIZE;
+				break;
+			}
+		}
+	//If player off top of screen
+	}else if(yPos < 0){
+		for(int i=0; i<5; i++){
+			if(arena.vField[i][getxCenter()] != '#'){
+				yVel *= -bounceFactor;
+				yPos = i*TILE_SIZE;
 				break;
 			}
 		}
 	}
 }
 
+//Implement an always-downward acceleration on the object aka gravity
 void PhysObj::gravity(void){
-	if(yVel > 0.25){
+	if(yVel > 0){
 		yVel += yAccel*dTime;
 		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime*dTime);
 	}else if(yVel <= 0){
