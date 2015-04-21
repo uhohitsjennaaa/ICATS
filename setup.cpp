@@ -1,12 +1,14 @@
 //As of 4/20: opens SDL window, changes background randomly, and creates board from playField.cpp
 //To do: timer, scoring
 
-#include <sstream>
+#include "setup.h"
+
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <sstream>
+
 #include "playField.h"
-#include "setup.h"
 using namespace std;
 
 typedef vector< vector <char> > v2;
@@ -28,8 +30,17 @@ setup::setup(){
 	bgPath="bg/";
 	imExt=".bmp";
 	
-	string bg=background();
-	
+	bg=background();
+}
+
+setup::~setup(){
+	SDL_FreeSurface(surf);
+	SDL_FreeSurface(field);
+	SDL_DestroyWindow(win);
+	SDL_Quit(); //quit SDL
+}
+
+SDL_Window* setup::window(){
 	SDL_Surface* tmp;
 	
 	if(SDL_Init(SDL_INIT_VIDEO)<0){ //initialize SDL
@@ -52,18 +63,15 @@ setup::setup(){
 		}
 	}
 	SDL_FreeSurface(tmp);
-}
-
-setup::~setup(){
-	SDL_FreeSurface(surf);
-	SDL_FreeSurface(field);
-	SDL_DestroyWindow(win);
-	SDL_Quit(); //quit SDL
+	
+	return win;
 }
 
 string setup::background(){
 	ostringstream os;
- 	int r=rand()%24+2; //err: 0,1; edit?: 4,6,9,14,16,18,20,25
+ 	int r;
+ 	//r=rand()%24+2; 
+	r=0; //err: 0,1; edit?: 4,6,9,14,16,18,20,25
 	
 	os << imPath << bgPath << "b" << r << imExt;
 	string s=os.str();
@@ -78,6 +86,7 @@ void setup::makeFieldSurf(){
 
 	//get field info
 	playField arena(S_HEIGHT,S_WIDTH,TILE_SIZE);
+	v2 vField=arena.setField();
 	v2 vField=arena.getField();
 
 	//SDL_Rect to add field elements

@@ -1,5 +1,5 @@
-#include <algorithm>
 #include "playField.h"
+#include <algorithm>
 using namespace std;
 
 typedef vector< vector <char> > v2;
@@ -13,19 +13,20 @@ playField::playField(int iHeight, int iWidth, int tileSize){
 
 	vector <char> tempVec; //temp vector to create v2
 	
-		for(int iCol=0; iCol<pWidth; iCol++){
-			if(iCol==width)
-				for(int iRow=0; iRow<height; iRow++) vField.push_back(tempVec);
-			tempVec.push_back(' '); //fill vectors
-		} //end for(int iCol=0; iCol<pWidth; iCol++)
+	for(int iCol=0; iCol<pWidth; iCol++) tempVec.push_back(' ');
+	for(int iRow=0; iRow<height; iRow++) vField.push_back(tempVec);
+	
+// 	for(int iCol=0; iCol<pWidth; iCol++){
+// 		if(iCol==width)
+// 			for(int iRow=0; iRow<height; iRow++) vField.push_back(tempVec);
+// 		tempVec.push_back(' '); //fill vectors
+// 	} //end for(int iCol=0; iCol<pWidth; iCol++)
 			
-	for(int iRow=0; iRow<pHeight; iRow++){
-		pixField.push_back(tempVec);
-	} //end for(int iRow=0; iRow<pHeight; iRow++)
+// 	for(int iRow=0; iRow<pHeight; iRow++){
+// 		pixField.push_back(tempVec);
+// 	} //end for(int iRow=0; iRow<pHeight; iRow++)
 	
 	tempVec.clear();
-	
-	makeField();
 }
 
 void playField::addBorder(int thickness){
@@ -104,7 +105,7 @@ void playField::mirror(){
 	} //end for(int pRow=0; pRow<pHeight; pRow++)
 }*/
 
-void playField::makeField(){
+void playField::setField(){
 	addGoal(8,8,6,6); //create goal
 
 	//Add goal surrounding platforms

@@ -10,6 +10,7 @@ class setup{
 	public:
 		setup();
 		~setup();
+		SDL_Window* window();
 	private:
 		string background();
 		void makeFieldSurf();
@@ -19,6 +20,7 @@ class setup{
 		string imPath;
 		string bgPath;
 		string imExt;
+		string bg;
 };
 
 #endif

@@ -11,6 +11,7 @@ class playField {
 	friend ostream &operator<<(ostream&,v2&); //overloaded operator for v2
 	public:
 		playField(int iHeight=400, int iWidth=600, int tileSize=10); //constructor
+		void setField(); //create full field
 		v2 getField(); //access vField
 // 		v2 getPix(); //access pixField
 	private:
@@ -30,7 +31,6 @@ class playField {
 // 		void pixels(); //Make pixel field
 		void print(); //print board
 // 		void printPix(); //print values for each pixel
-		void makeField(); //create full field
 		
 		int height;
 		int width;

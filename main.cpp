@@ -2,16 +2,16 @@
 
 //driver function
 
-#include "playField.h"
 #include "setup.h"
 using namespace std;
 
 int main(){
-	setup game;
+	SDL_Window* wind; 
+	SDL_Event event; //SDL keypress variable
 	
-	//SDL keypress variable
-	SDL_Event event;
-
+	setup game;
+	wind=game.window();
+	
 	int quit = 0;
 	
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
