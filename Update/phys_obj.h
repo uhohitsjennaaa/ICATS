@@ -63,11 +63,11 @@ PhysObj::PhysObj(float ixPos, float iyPos, int iwidth, int iheight, playField &f
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
-	maxxVel = 8;
+	maxxVel = 7;
 	yVel = 0;
-	maxyVel = 8;
-	xAccel = 0.5;
-	yAccel = 0.8;
+	maxyVel = 6;
+	xAccel = 3; //0.75;
+	yAccel = 1;
 	dTime = 1;
 	inAir = 0;
 	windMult = 10;
@@ -186,7 +186,7 @@ void PhysObj::checkyBounds(void){
 }
 
 void PhysObj::gravity(void){
-	if(yVel > 0.25){
+	if(yVel > 0){
 		yVel += yAccel*dTime;
 		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime*dTime);
 	}else if(yVel <= 0){

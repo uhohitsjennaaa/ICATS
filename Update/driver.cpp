@@ -12,15 +12,6 @@
 #include <iostream>
 using namespace std;
 
-//Size of window and background pieces
-/*
-const int S_WIDTH = 600;
-const int S_HEIGHT = 400;
-const int TILE_SIZE = 10;
-const int P_WIDTH = 15;
-const int P_HEIGHT = 30;
-*/
-
 int main(){
 	//initialize SDL	
 	if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -95,20 +86,22 @@ int main(){
         PhysObj * pP1 = &P1;
 	player P2(p2_x, p2_y, arena);
 	PhysObj * pP2 = &P2;
-	
-	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
 	while(!quit){
 		//Clear screen
 		renderTexture(bg,ren,0,0,S_WIDTH,S_HEIGHT);
+		
+		//Get keys
+		const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
 		//Handle keyboard inputs
-		while(SDL_PollEvent(&event)){
-			
+		SDL_PollEvent(&event);
+		
 			//quit if user presses escape
-			if(/*event.key.keysym.sym == */ keys[SDL_SCANCODE_ESCAPE]){
+			if(keys[SDL_SCANCODE_ESCAPE]){
 				quit = 1;
 			}
+
 			//p1 controls
 			if(keys[SDL_SCANCODE_D]){
 				P1.moveRight();
@@ -118,16 +111,17 @@ int main(){
 			if(keys[SDL_SCANCODE_W]){
 				P1.jump();
 			}
-
+			P1.noMove();
 			//p2 move left
 			if(keys[SDL_SCANCODE_J]){
 				P2.moveLeft();			
-			}else if(keys[SDL_SCANCODE_L]){
+			}
+			if(keys[SDL_SCANCODE_L]){
 				P2.moveRight();
 			}
-		}	
+
+
 		//When players don't move 
-		P1.noMove();
 		P2.noMove();
 
 		//Check bounds of players
