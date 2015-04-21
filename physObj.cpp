@@ -1,13 +1,14 @@
 //phys_obj.cpp
 
-#include<iostream>
-#include<cmath>
-#include"phys_obj.h"
-#include"field.h"
+#include "phys_obj.h"
 
+#include <iostream>
+#include <cmath>
+
+#include "field.h"
 using namespace std;
 
-PhysObj::PhysObj(float ixPos, float iyPos){
+PhysObj::PhysObj(){
 	xPos = ixPos;
 	yPos = iyPos;
 	xVel = 0;
@@ -18,7 +19,6 @@ PhysObj::PhysObj(float ixPos, float iyPos){
 	yAccel = 0.2;
 	dTime = 1;
 	windMult = 10;
-	return;
 }
 
 int PhysObj::getEdgeLeft(){
@@ -40,7 +40,6 @@ int PhysObj::getEdgeBottom(){
 int PhysObj::getyCenter(){
 	return ceil((yPos+(height/2))/windMult)-1;
 }
-
 
 float PhysObj::getxPos(){
 	return xPos;

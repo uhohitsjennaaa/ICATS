@@ -71,9 +71,10 @@ string setup::background(){
 	ostringstream os;
  	int r;
  	//r=rand()%24+2; 
-	r=30;
+	r=0;
 	
 	os << imPath << bgPath << "b" << r << imExt;
+	//os << imPath << bgPath << "bg" << imExt;
 	string s=os.str();
 	cout << s << endl;
 	return s;
@@ -117,8 +118,8 @@ void setup::makeFieldSurf(){
 			for(int iCol = 0; iCol < S_WIDTH/TILE_SIZE; iCol++){
 				tmpRect.x=iCol*TILE_SIZE;
 				if(vField[iRow][iCol] == '#') SDL_BlitSurface(tSurf[0],NULL,surf,&tmpRect); //add tile
-				//else if(vField[iRow][iCol] == '$') SDL_BlitSurface(tSurf[1],NULL,surf,&tmpRect); //make goal1
-				//else if(vField[iRow][iCol] == '%') SDL_BlitSurface(tSurf[2],NULL,surf,&tmpRect); //make goal2
+// 				else if(vField[iRow][iCol] == '$') SDL_BlitSurface(tSurf[1],NULL,surf,&tmpRect); //make goal1
+// 				else if(vField[iRow][iCol] == '%') SDL_BlitSurface(tSurf[2],NULL,surf,&tmpRect); //make goal2
 			} //end for(int iCol = 0; iCol < width; iCol++)
 		} //end for (int iRow = 0; iRow < height; iRow++)
 	} //end if(tmp==NULL)...else
