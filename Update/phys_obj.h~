@@ -66,7 +66,7 @@ PhysObj::PhysObj(float ixPos, float iyPos, float bounce, int iwidth, int iheight
 	xVel = 0;
 	maxxVel = 7;
 	yVel = 0;
-	maxyVel = 6;
+	maxyVel = 7;
 	xAccel = 3; //0.75;
 	yAccel = 1;
 	dTime = 1;
@@ -142,7 +142,7 @@ void PhysObj::checkxBounds(void){
 		for(int i=getEdgeLeft(); i<getEdgeLeft()+5; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
-				xVel *= -bounceFactor*2;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -151,7 +151,7 @@ void PhysObj::checkxBounds(void){
 		for(int i=0; i<5; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
-				xVel *= -bounceFactor*2;
+				xVel *= -bounceFactor;
 				break;
 			}
 		}
@@ -177,8 +177,18 @@ void PhysObj::checkxBounds(void){
 }
 
 void PhysObj::checkyBounds(void){
+	//Off the bottom
+	if(getyCenter() >= (S_HEIGHT / windMult)-1){	
+		for(int i=(S_HEIGHT / windMult)-1; i>(S_HEIGHT / windMult)-6; i--){
+			if(arena.vField[i][getxCenter()] != '#'){
+				yPos = i*TILE_SIZE-(height-TILE_SIZE);
+				yVel *= -bounceFactor; 
+				jumped = 0;
+				break;
+			}
+		}
 	//Check object's bottom edge, at '#'
-	if(arena.vField[getEdgeBottom()][getxCenter()] == '#'){
+	}else if(arena.vField[getEdgeBottom()][getxCenter()] == '#'){
 		for(int i=getEdgeBottom(); i>getEdgeBottom()-5; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
@@ -187,28 +197,18 @@ void PhysObj::checkyBounds(void){
 				break;
 			}
 		}
-	//Off the bottom
-	}else if(yPos > S_HEIGHT){
-		for(int i=(S_HEIGHT / 10); i>(S_HEIGHT / 10)-5; i--){
-			if(arena.vField[i][getxCenter()] != '#'){
-				yPos = i*TILE_SIZE-(height-TILE_SIZE);
-				yVel *= -bounceFactor; 
-				jumped = 0;
-				break;
-			}
-		}
-	//check top of object, at '#'
-	}else if(arena.vField[getEdgeTop()][getxCenter()] == '#'){
-		for(int i=getEdgeTop(); i<getEdgeTop()+5; i++){
+	//Off the top of the screen
+	}else if(yPos <= 0){
+		for(int i=1; i<5; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
 				break;
 			}
 		}
-	//If player off top of screen
-	}else if(yPos < 0){
-		for(int i=0; i<5; i++){
+	//check top of object, at '#'
+	}else if(arena.vField[getEdgeTop()][getxCenter()] == '#'){
+		for(int i=getEdgeTop(); i<getEdgeTop()+5; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;

@@ -72,7 +72,11 @@ string setup::background(){
 	r=0;
 	
 	//os << imPath << bgPath << "b" << r << imExt;
+<<<<<<< HEAD
 	os << imPath << bgPath << "bg" << imExt;
+=======
+	os << imPath << "ocat" << imExt;
+>>>>>>> 84fb94f9031e2dfedabdc8dea25b85d91301b00a
 	string s=os.str();
 	cout << s << endl;
 	return s;

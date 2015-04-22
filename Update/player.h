@@ -24,9 +24,7 @@ class player: public PhysObj{
 #endif
 
 //Constructor
-player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .25, width, height, arena){
-	width = 15;
-	height = 30;
+player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .15, 15, 30, arena){
 	return;
 }
 
@@ -75,7 +73,7 @@ void player::jump(void){
 	//Allow jump if player is not in air from a previous jump	
 	if(jumped == 0){
 		//give initial yVelocity 
-		yVel -= 15;
+		yVel -= 14;
 		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
 		jumped = 1;
 	}
