@@ -18,13 +18,17 @@ class ball: public PhysObj{
 		ball(float, float, playField &);
 		void Update(float, float, float, float);
 		void grab(float, float, float, float);
+		void reset(void);
 		void throwRight(int);
 		void throwLeft(int);
 		void xMove(void);
+		int score(void);
 		int inGoal(void);
 	private:
 		int p1Held;
 		int p2Held;
+		int p1Score;
+		int p2Score;
 		int allowHold;
 		int holdCount;
 		int bounces; //Count number of bounces for scoring
@@ -38,10 +42,19 @@ ball::ball(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .
 	srand(time(NULL));
 	p1Held = 0;
 	p2Held = 0;
+	p1Score = 0;
+	p2Score = 0;
 	allowHold = 1;
 	holdCount = 0;
 	bounces = 0;
 	return;
+}
+
+void ball::reset(void){
+	p1Held = 0;
+	p2Held = 0;
+	xPos = (S_WIDTH/2);
+	yPos = (S_HEIGHT/2);
 }
 
 //Find close player and see if they grab the ball
@@ -106,18 +119,46 @@ void ball::throwRight(int thrower){
 int ball::inGoal(void){
 	if(arena.vField[getyCenter()][getxCenter()] == '$'){
 		xVel *= .5;
+		if(bounces == 0){
+			p1Score += 1;
+		}else{
+			p1Score += bounces;		
+		}		
+		reset();
+		return 1;
 	}else if(arena.vField[getyCenter()][getxCenter()] == '%'){
 		xVel *= .5;
+		if(bounces == 0){
+			p2Score += 1;
+		}else{
+			p2Score += bounces;		
+		}		
+		reset();
+		return 2;
 	}
+	return 0;
 }
 
+//See if player scores, return player who did
+int ball::score(void){
+	if(inGoal()==1){
+		cout << "Player 1 Scores!" << endl;
+		cout << "Score:" << endl;
+		cout << p1Score << ":" << p2Score << endl;
+		return 1;
+	}else if(inGoal()==2){
+		cout << "Player 2 Scores!" << endl;
+		cout << "Score:" << endl;
+		cout << p1Score << ":" << p2Score << endl;
+		return 2;
+	}
+	return 0;
+}
 
 //Update upon each frame
 void ball::Update(float xPos1, float yPos1, float xPos2, float yPos2){
 	//Allow player to grab the ball
 	grab(xPos1, yPos1, xPos2, yPos2);	
-
-	inGoal();
 
 	//Ball flies away if players are too close to each other and the ball is held, a steal!
 	if(sqrt(pow(((xPos1+(P_WIDTH/2.0)) - (xPos2+(P_WIDTH/2.0))),2)) < 25 
@@ -148,7 +189,6 @@ void ball::Update(float xPos1, float yPos1, float xPos2, float yPos2){
 			allowHold = 1;
 		}
 	}
-	cout << bounces << endl;
 }
 
 //movement along xAxis

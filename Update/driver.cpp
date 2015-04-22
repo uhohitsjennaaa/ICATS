@@ -89,6 +89,7 @@ int main(){
 	PhysObj * pP2 = &P2;
 	ball ball(200,200,arena);
 	PhysObj * pBall = &ball;
+	ball.reset();
 
 	//Instantiate ball handler
 
@@ -164,6 +165,8 @@ int main(){
 		
 		//Ball movement
 		ball.Update(P1.getxPos(), P1.getyPos(), P2.getxPos(), P2.getyPos());
+
+		ball.score();
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){
