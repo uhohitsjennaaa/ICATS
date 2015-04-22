@@ -73,8 +73,8 @@ string setup::background(){
  	//r=rand()%24+2; 
 	r=0;
 	
-	os << imPath << bgPath << "b" << r << imExt;
-	//os << imPath << bgPath << "bg" << imExt;
+	//os << imPath << bgPath << "b" << r << imExt;
+	os << imPath << "ocat" << imExt;
 	string s=os.str();
 	cout << s << endl;
 	return s;
