@@ -84,7 +84,7 @@ int PhysObj::getEdgeLeft(){
 }
 
 int PhysObj::getEdgeRight(){
-	return ceil((xPos+width)/windMult)-1;
+	return ceil((xPos+width+2.5)/windMult)-1;
 }
 
 int PhysObj::getEdgeTop(){
@@ -138,7 +138,7 @@ void PhysObj::setyPos(float y){
 
 void PhysObj::checkxBounds(void){
 	//If object is off left of screen
-	if(getxCenter() <= 1){
+	if(getEdgeLeft() <= 0){
 		for(int i=0; i<8; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
@@ -148,7 +148,7 @@ void PhysObj::checkxBounds(void){
 		}
 	//Checking at left, moving object right, bouncing off
 	}else if(arena.vField[getyCenter()][getEdgeLeft()] == '#'){
-		for(int i=getEdgeLeft(); i<getEdgeLeft()+8; i++){
+		for(int i=getEdgeLeft()+1; i<getEdgeLeft()+8; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
 				xVel *= -bounceFactor;
@@ -156,7 +156,7 @@ void PhysObj::checkxBounds(void){
 			}
 		}
 	//If object goes beyond screen width
-	}else if(getxCenter() >= S_WIDTH-2){
+	}else if(getEdgeRight() >= (S_WIDTH/windMult)-1){
 		for(int i=(S_WIDTH/windMult-1); i>((S_WIDTH/windMult)-1)-8; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
@@ -164,22 +164,21 @@ void PhysObj::checkxBounds(void){
 				break;
 			}
 		}
-	//If player runs into '#' on his right
+	//If object runs into '#' on his right
 	}else if(arena.vField[getyCenter()][getEdgeRight()] == '#'){
-		for(int i=getEdgeRight(); i>getEdgeRight()-8; i--){
+		for(int i=getEdgeRight()-1; i>getEdgeRight()-8; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
 				xVel *= -bounceFactor;
 				break;
 			}
 		}
-	
 	}
 }
 
 void PhysObj::checkyBounds(void){
 	//Off the bottom
-	if(getyCenter() >= (S_HEIGHT / windMult)-2){	
+	if(getEdgeBottom() >= (S_HEIGHT / windMult)-1){	
 		for(int i=(S_HEIGHT / windMult)-1; i>(S_HEIGHT / windMult)-8; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
@@ -199,7 +198,7 @@ void PhysObj::checkyBounds(void){
 			}
 		}
 	//Off the top of the screen
-	}else if(getyCenter() <= 1){
+	}else if(getEdgeTop() <= 0){
 		for(int i=1; i<8; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;

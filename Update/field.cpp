@@ -19,17 +19,6 @@ playField::playField(int iHeight, int iWidth){
 	for(int iRow=0; iRow<height; iRow++){
 		vField.push_back(tempVec);
 	}
-
-	tempVec.clear();
-
-	for(int iCol=0; iCol<width*10; iCol++){
-		tempVec.push_back(' ');
-	}
-		
-	for(int iRow=0; iRow<height*10; iRow++){
-		pixField.push_back(tempVec);
-	}
-
 }
 
 void playField::print(void){
@@ -158,26 +147,4 @@ void playField::makeField1(void){
 	mirror();
 
 	return;
-}
-
-//Make pixel field
-void playField::pixels(){
-	for(int iRow=0; iRow<height; iRow++){
-		for(int iCol=0; iCol<width; iCol++){
-			for(int pRow=iRow*10; pRow<(iRow*10)+10; pRow++){
-				for(int pCol=iCol*10; pCol<(iCol*10)+10; pCol++){
-					pixField[pRow][pCol] = vField[iRow][iCol];
-				}
-			}
-		}
-	}
-}
-
-void playField::printPix(void){
-	for(int pRow=0; pRow<height*10; pRow++){
-		for(int pCol=0; pCol<width*10; pCol++){
-			cout << pixField[pRow][pCol];
-		}
-		cout << endl;					
-	}
 }

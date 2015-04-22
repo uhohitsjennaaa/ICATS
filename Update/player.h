@@ -35,6 +35,7 @@ void player::moveLeft(void){
 		xVel = -maxxVel;
 	}	
 	xPos = xPos+xVel*(dTime)-.5*(xAccel/5.0)*(dTime*dTime);
+	checkxBounds();
 }
 
 //Move right
@@ -44,6 +45,7 @@ void player::moveRight(void){
 		xVel = maxxVel;
 	}	
 	xPos = xPos+xVel*(dTime)+.5*(xAccel/5.0)*(dTime*dTime);
+	checkxBounds();
 }
 
 //Handle no input keys
@@ -65,7 +67,9 @@ void player::noMove(void){
 		xVel = 0;
 		xPos = xPos;
 	}
+	checkxBounds();
 	gravity();
+	checkyBounds();
 }
 
 //Jump function
@@ -77,4 +81,5 @@ void player::jump(void){
 		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
 		jumped = 1;
 	}
+	checkyBounds();
 }

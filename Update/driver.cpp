@@ -38,15 +38,15 @@ int main(){
 	}
 
 	//get image resources
-	string bg_image = "images/background1.bmp";
+	string bg_image = "images/bg.bmp";
 	string bg_tiles = "images/tile.bmp";
 	string goal1_tile = "images/goal1.bmp";
 	string goal2_tile = "images/goal2.bmp";
 	string figure1 = "images/littleorangeleftcat.bmp";
-	string figure2 = "images/littlewhiterightcat.bmp";
+	//string figure2 = "images/littlewhiterightcat.bmp";
 	//.string figure1 = "images/dude1_small.bmp";
-	//string figure2 = "images/dude2_small.bmp";
-	string ball_img = "images/yarn.bmp";
+	string figure2 = "images/dude1_small.bmp";
+	string ball_img = "images/ball.png";
 
 	//Create texture for background, and goals
 	SDL_Texture *bg = IMG_LoadTexture(ren, bg_image.c_str());
@@ -64,9 +64,6 @@ int main(){
 	//create premade arena
 	arena.makeField1();
 
-	//Create pixel field arena
-	arena.pixels();
-		
 	//Determine how many tiles we'll need to fill the screen
 	int xTiles = S_WIDTH / TILE_SIZE;
 	int yTiles = S_HEIGHT / TILE_SIZE;
@@ -160,11 +157,11 @@ int main(){
 		P2.noMove();
 
 		//Check bounds of players
-		P1.checkxBounds();
+		/*P1.checkxBounds();
 		P2.checkxBounds();
 		P1.checkyBounds();
-		P2.checkyBounds();
-	
+		P2.checkyBounds();*/
+		
 		//Ball movement
 		ball.Update(P1.getxPos(), P1.getyPos(), P2.getxPos(), P2.getyPos());
 
