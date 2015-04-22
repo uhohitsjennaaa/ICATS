@@ -1,67 +1,60 @@
-//phys_obj.cpp
+#include "physObj.h"
 
-#include "phys_obj.h"
-
-#include <iostream>
 #include <cmath>
 
-#include "field.h"
+#include "constants.h"
 using namespace std;
 
-PhysObj::PhysObj(){
-	xPos = ixPos;
-	yPos = iyPos;
+physObj::physObj(x,y,oH,oW){
+	xPos = x;
+	yPos = y;
 	xVel = 0;
-	maxxVel = 8;
 	yVel = 0;
-	maxyVel = 8;
-	xAccel = 0.5;
-	yAccel = 0.2;
+	xAcc = 0.5;
+	yAcc = 0.2;
+	maxVel = 8;
+	maxAcc = 20;
+	
 	dTime = 1;
-	windMult = 10;
+	
+	objHeight = oH;
+	objWidth = oW;
+	
+	width = S_WIDTH;
+	height = S_HEIGHT;
+	windMult = TILE_SIZE;
+	
+	minX = windMult+objWidth;
+	maxX = S_WIDTH-minX;
+	minY = windMult+objHeight;
+	maxY = S_HEIGHT-minY;
 }
 
-int PhysObj::getEdgeLeft(){
-	return ceil(xPos/windMult)-1;
+void physObj()::moveX(){
+	xVel += xAccel*dTime;
+	if(xVel < -maxVel) xVel = -maxVel;
+	else if(xVel > maxVel) xVel = maxVel;
+	xPos = xPos+xVel*(dTime)+.5*(xAccel)*(dTime*dTime);
 }
 
-int PhysObj::getEdgeRight(){
-	return ceil((xPos+width)/windMult)-1;
+void physObj::moveY(){
+	yVel += yAccel*dTime;
+	if(yVel < -maxVel) yVel = -maxVel;
+	else if(yVel > maxVel) yVel = maxVel;
+	yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime*dTime);
 }
 
-int PhysObj::getEdgeTop(){
-	return ceil(yPos/windMult)-1;
+void PhysObj()::setPos(float x,float y){
+	if(!(x > maxX || x < minX)) xPos = x;
+	if(!(y > maxY || y < minY)) yPos = y;
 }
 
-int PhysObj::getEdgeBottom(){
-	return ceil((yPos+height)/windMult)-1;
+void PhysObj()::setVel(float x,float y){
+	if(!(x > maxVel || x < -maxVel)) xVel = x;
+	if(!(y > maxVel || y < -maxVel)) yVel = y;
 }
 
-int PhysObj::getyCenter(){
-	return ceil((yPos+(height/2))/windMult)-1;
+void PhysObj()::setAcc(float x,float y){
+	if(!(x > maxAcc || x < -maxAcc)) xAcc = x;
+	if(!(y > maxAcc || y < -maxAcc)) yAcc = y;
 }
-
-float PhysObj::getxPos(){
-	return xPos;
-}
-
-float PhysObj::getyPos(){
-	return yPos;
-}
-
-float PhysObj::getxVel(){
-	return xVel;
-}
-
-float PhysObj::getyVel(){
-	return yVel;
-}
-
-float PhysObj::getxAccel(){
-	return xAccel;
-}
-
-float PhysObj::getyAccel(){
-	return yAccel;
-}
-

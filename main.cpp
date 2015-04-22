@@ -6,11 +6,13 @@
 using namespace std;
 
 int main(){
-	SDL_Window* wind; 
+	SDL_Window* wind;
+	SDL_Renderer* rend; 
 	SDL_Event event; //SDL keypress variable
 	
 	setup game;
 	wind=game.window();
+	rend=game.renderer();
 	
 	int quit = 0;
 	

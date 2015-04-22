@@ -1,13 +1,12 @@
 #include "playField.h"
+
 #include <algorithm>
 using namespace std;
 
-typedef vector< vector <char> > v2;
-
-playField::playField(int iHeight, int iWidth, int tileSize){
-	tSize=tileSize;
-	pHeight=iHeight;
-	pWidth=iWidth;
+playField::playField(){
+	tSize=TILE_SIZE;
+	pHeight=S_HEIGHT;
+	pWidth=S_WIDTH;
 	height=pHeight/tSize;
 	width=pWidth/tSize;
 
@@ -15,16 +14,6 @@ playField::playField(int iHeight, int iWidth, int tileSize){
 	
 	for(int iCol=0; iCol<pWidth; iCol++) tempVec.push_back(' ');
 	for(int iRow=0; iRow<height; iRow++) vField.push_back(tempVec);
-	
-// 	for(int iCol=0; iCol<pWidth; iCol++){
-// 		if(iCol==width)
-// 			for(int iRow=0; iRow<height; iRow++) vField.push_back(tempVec);
-// 		tempVec.push_back(' '); //fill vectors
-// 	} //end for(int iCol=0; iCol<pWidth; iCol++)
-			
-// 	for(int iRow=0; iRow<pHeight; iRow++){
-// 		pixField.push_back(tempVec);
-// 	} //end for(int iRow=0; iRow<pHeight; iRow++)
 	
 	tempVec.clear();
 }
@@ -51,9 +40,8 @@ void playField::addBorder(int thickness){
 			vField[iRow][iCol] = '#';
 
 	//Change playing dimensions of field
-	playHeight = height - thickness;
-	playWidth = width - thickness;
-//	return;
+	playHeight = pHeight - thickness*tSize;
+	playWidth = pWidth - thickness*tSize;
 }
 
 void playField::addPlatform(int startRow, int startCol, int plHeight, int plWidth){
@@ -61,7 +49,6 @@ void playField::addPlatform(int startRow, int startCol, int plHeight, int plWidt
 	for(int iRow=startRow; iRow<startRow+plHeight && iRow>0 && iRow<height; iRow++)
 		for(int iCol=startCol; iCol<startCol+plWidth && iCol>0 && iCol<width; iCol++)
 			vField[iRow][iCol] = '#';
-//	return;
 }
 
 void playField::addGoal(int startRow, int startCol, int gHeight, int gWidth){
@@ -69,7 +56,6 @@ void playField::addGoal(int startRow, int startCol, int gHeight, int gWidth){
 	for(int iRow=startRow; iRow<startRow+gHeight && iRow>0 && iRow<height; iRow++)
 		for(int iCol=startCol; iCol<startCol+gWidth && iCol>0 && iCol<width; iCol++)
 			vField[iRow][iCol] = '%';
-// 	return;
 }
 
 void playField::addStart(int startRow, int startCol, int sHeight, int sWidth){
@@ -77,7 +63,6 @@ void playField::addStart(int startRow, int startCol, int sHeight, int sWidth){
 	for(int iRow=startRow; iRow<startRow+sHeight && iRow>0 && iRow<height; iRow++)
 		for(int iCol=startCol; iCol<startCol+sWidth && iCol>0 && iCol<width; iCol++)
 			vField[iRow][iCol] = '1';
-// 	return;
 }
 
 void playField::mirror(){
@@ -86,24 +71,10 @@ void playField::mirror(){
 		for(int iCol=0; iCol<width/2; iCol++){
 			//Cover special symbol cases AKA goals and player spawns
  			if(vField[iRow][iCol] == '1') vField[iRow][width-1-iCol] = '2';
-//  			else if(vField[iRow][iCol] == '2') vField[iRow][width-1-iCol] = '1';
-//  			else if(vField[iRow][iCol] == '$') vField[iRow][width-1-iCol] = '%';
  			else if(vField[iRow][iCol] == '%') vField[iRow][width-1-iCol] = '$';
  			else vField[iRow][width-1-iCol] = vField[iRow][iCol];
 		} //end for(int iCol=0; iCol<width-1/2; iCol++)
-// 	return;
 }
-
-/*void playField::pixels(){
-	int iRow=-1,iCol=-1;
-	for(int pRow=0; pRow<pHeight; pRow++){
-		if(pRow%tSize==0) iRow++;
-		for(int pCol=0; pCol<pWidth; pCol++){
-			if(pCol%tSize == 0) iCol++;
-			pixField[pRow][pCol] = vField[iRow][iCol];
-		} //end for(int pCol=0; pCol<pWidth; pCol++)
-	} //end for(int pRow=0; pRow<pHeight; pRow++)
-}*/
 
 void playField::setField(){
 	addGoal(8,1,6,6); //create goal
@@ -134,10 +105,6 @@ v2 playField::getField(){
 	return vField;
 }
 
-/*v2 playField::getPix(){
-	return pixField;
-}*/
-
 ostream &operator<<(ostream &out,v2 &v){
 	v2::iterator i;
 	vector<char>::iterator j;
@@ -153,7 +120,3 @@ ostream &operator<<(ostream &out,v2 &v){
 void playField::print(){
 	cout << vField << endl;
 }
-
-/*void playField::printPix(){
-	cout << pixField << endl;
-}*/
