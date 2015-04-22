@@ -62,7 +62,7 @@ int main(){
 	playField arena;
 	
 	//create premade arena
-	arena.makeField1();
+	arena.makeField2();
 
 	//Determine how many tiles we'll need to fill the screen
 	int xTiles = S_WIDTH / TILE_SIZE;

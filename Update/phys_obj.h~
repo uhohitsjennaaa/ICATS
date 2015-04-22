@@ -34,8 +34,8 @@ class PhysObj{
 		virtual void setxPos(float);
 		virtual void setyPos(float);
 		
-		virtual void checkxBounds(void);
-		virtual void checkyBounds(void);
+		virtual int checkxBounds(void);
+		virtual int checkyBounds(void);
 		virtual void gravity(void);
 	protected:
 		playField arena;
@@ -84,7 +84,7 @@ int PhysObj::getEdgeLeft(){
 }
 
 int PhysObj::getEdgeRight(){
-	return ceil((xPos+width)/windMult)-1;
+	return ceil((xPos+width+2)/windMult)-1;
 }
 
 int PhysObj::getEdgeTop(){
@@ -136,86 +136,88 @@ void PhysObj::setyPos(float y){
 	yPos = y;
 }
 
-void PhysObj::checkxBounds(void){
-	//Checking at left, moving object right, bouncing off
-	if(arena.vField[getyCenter()][getEdgeLeft()] == '#' || xPos < 0){
-		for(int i=getEdgeLeft(); i<getEdgeLeft()+5; i++){
-			if(arena.vField[getyCenter()][i] != '#'){
-				xPos = i*TILE_SIZE;
-				xVel *= -bounceFactor;
-				break;
-			}
-		}
+int PhysObj::checkxBounds(void){
 	//If object is off left of screen
-	}else if(xPos < 0){
-		for(int i=0; i<5; i++){
+	if(getEdgeLeft() <= 0){
+		for(int i=0; i<8; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
 				xVel *= -bounceFactor;
-				break;
+				return 1;
 			}
 		}
-	//If player runs into '#' on his right
-	}else if(arena.vField[getyCenter()][getEdgeRight()] == '#'){
-		for(int i=getEdgeRight(); i>getEdgeRight()-5; i--){
+	//Checking at left, moving object right, bouncing off
+	}else if(arena.vField[getyCenter()][getEdgeLeft()] == '#'){
+		for(int i=getEdgeLeft()+1; i<getEdgeLeft()+8; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
-				xPos = i*TILE_SIZE-(width-TILE_SIZE);
+				xPos = i*TILE_SIZE;
 				xVel *= -bounceFactor;
-				break;
+				return 1;
 			}
 		}
 	//If object goes beyond screen width
-	}else if(xPos > S_WIDTH){
-		for(int i=(S_WIDTH/windMult-1); i>((S_WIDTH/windMult)-1)-5; i--){
+	}else if(getEdgeRight() >= (S_WIDTH/windMult)-1){
+		for(int i=(S_WIDTH/windMult-1); i>((S_WIDTH/windMult)-1)-8; i--){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
 				xVel *= -bounceFactor;
-				break;
+				return 1;
+			}
+		}
+	//If object runs into '#' on his right
+	}else if(arena.vField[getyCenter()][getEdgeRight()] == '#'){
+		for(int i=getEdgeRight()-1; i>getEdgeRight()-8; i--){
+			if(arena.vField[getyCenter()][i] != '#'){
+				xPos = i*TILE_SIZE-(width-TILE_SIZE);
+				xVel *= -bounceFactor;
+				return 1;
 			}
 		}
 	}
+	return 0;
 }
 
-void PhysObj::checkyBounds(void){
+int PhysObj::checkyBounds(void){
 	//Off the bottom
-	if(getyCenter() >= (S_HEIGHT / windMult)-1){	
-		for(int i=(S_HEIGHT / windMult)-1; i>(S_HEIGHT / windMult)-6; i--){
+	if(getEdgeBottom() >= (S_HEIGHT / windMult)-1){	
+		for(int i=(S_HEIGHT / windMult)-1; i>(S_HEIGHT / windMult)-8; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
 				yVel *= -bounceFactor; 
 				jumped = 0;
-				break;
+				return 1;
 			}
 		}
 	//Check object's bottom edge, at '#'
 	}else if(arena.vField[getEdgeBottom()][getxCenter()] == '#'){
-		for(int i=getEdgeBottom(); i>getEdgeBottom()-5; i--){
+		for(int i=getEdgeBottom(); i>getEdgeBottom()-8; i--){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
 				yVel *= -bounceFactor;
 				jumped = 0;
-				break;
+				return 1;
 			}
 		}
 	//Off the top of the screen
-	}else if(yPos <= 0){
-		for(int i=1; i<5; i++){
+	}else if(getEdgeTop() <= 0){
+		for(int i=1; i<8; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
-				break;
+				return 1;
 			}
 		}
 	//check top of object, at '#'
 	}else if(arena.vField[getEdgeTop()][getxCenter()] == '#'){
-		for(int i=getEdgeTop(); i<getEdgeTop()+5; i++){
+		for(int i=getEdgeTop(); i<getEdgeTop()+8; i++){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
-				break;
+				return 1;
 			}
 		}
 	}
+	return 0;
 }
 
 //Implement an always-downward acceleration on the object aka gravity

@@ -34,8 +34,8 @@ class PhysObj{
 		virtual void setxPos(float);
 		virtual void setyPos(float);
 		
-		virtual void checkxBounds(void);
-		virtual void checkyBounds(void);
+		virtual int checkxBounds(void);
+		virtual int checkyBounds(void);
 		virtual void gravity(void);
 	protected:
 		playField arena;
@@ -84,7 +84,7 @@ int PhysObj::getEdgeLeft(){
 }
 
 int PhysObj::getEdgeRight(){
-	return ceil((xPos+width+2.5)/windMult)-1;
+	return ceil((xPos+width+1.5)/windMult)-1;
 }
 
 int PhysObj::getEdgeTop(){
@@ -136,14 +136,14 @@ void PhysObj::setyPos(float y){
 	yPos = y;
 }
 
-void PhysObj::checkxBounds(void){
+int PhysObj::checkxBounds(void){
 	//If object is off left of screen
 	if(getEdgeLeft() <= 0){
 		for(int i=0; i<8; i++){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
 				xVel *= -bounceFactor;
-				break;
+				return 1;
 			}
 		}
 	//Checking at left, moving object right, bouncing off
@@ -152,7 +152,7 @@ void PhysObj::checkxBounds(void){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE;
 				xVel *= -bounceFactor;
-				break;
+				return 1;
 			}
 		}
 	//If object goes beyond screen width
@@ -161,7 +161,7 @@ void PhysObj::checkxBounds(void){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
 				xVel *= -bounceFactor;
-				break;
+				return 1;
 			}
 		}
 	//If object runs into '#' on his right
@@ -170,13 +170,14 @@ void PhysObj::checkxBounds(void){
 			if(arena.vField[getyCenter()][i] != '#'){
 				xPos = i*TILE_SIZE-(width-TILE_SIZE);
 				xVel *= -bounceFactor;
-				break;
+				return 1;
 			}
 		}
 	}
+	return 0;
 }
 
-void PhysObj::checkyBounds(void){
+int PhysObj::checkyBounds(void){
 	//Off the bottom
 	if(getEdgeBottom() >= (S_HEIGHT / windMult)-1){	
 		for(int i=(S_HEIGHT / windMult)-1; i>(S_HEIGHT / windMult)-8; i--){
@@ -184,7 +185,7 @@ void PhysObj::checkyBounds(void){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
 				yVel *= -bounceFactor; 
 				jumped = 0;
-				break;
+				return 1;
 			}
 		}
 	//Check object's bottom edge, at '#'
@@ -194,7 +195,7 @@ void PhysObj::checkyBounds(void){
 				yPos = i*TILE_SIZE-(height-TILE_SIZE);
 				yVel *= -bounceFactor;
 				jumped = 0;
-				break;
+				return 1;
 			}
 		}
 	//Off the top of the screen
@@ -203,7 +204,7 @@ void PhysObj::checkyBounds(void){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
-				break;
+				return 1;
 			}
 		}
 	//check top of object, at '#'
@@ -212,10 +213,11 @@ void PhysObj::checkyBounds(void){
 			if(arena.vField[i][getxCenter()] != '#'){
 				yVel *= -bounceFactor;
 				yPos = i*TILE_SIZE;
-				break;
+				return 1;
 			}
 		}
 	}
+	return 0;
 }
 
 //Implement an always-downward acceleration on the object aka gravity

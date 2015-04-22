@@ -27,7 +27,7 @@ class ball: public PhysObj{
 		int p2Held;
 		int allowHold;
 		int holdCount;
-
+		int bounces; //Count number of bounces for scoring
 };
 
 #endif
@@ -40,6 +40,7 @@ ball::ball(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .
 	p2Held = 0;
 	allowHold = 1;
 	holdCount = 0;
+	bounces = 0;
 	return;
 }
 
@@ -48,13 +49,17 @@ void ball::grab(float xPos1, float yPos1, float xPos2, float yPos2){
 	//Allow players to grab the ball if it is close enough, second statement allows blocking
 	if(sqrt(pow((xPos2+(P_WIDTH/2.0) - xPos),2)) < 25 && sqrt(pow((yPos2+(P_HEIGHT/2.0) - yPos),2)) < 25 && allowHold == 1){
 		p2Held = 1;
+		bounces = 0;
 	}else if(sqrt(pow((xPos2+(P_WIDTH/2.0) - xPos),2)) < 25 && sqrt(pow((yPos2+(P_HEIGHT/2.0) - yPos),2)) < 25 && allowHold == 0 && holdCount > 3){
-		xVel *= -bounceFactor;
+		xVel *= -1.25*bounceFactor;
+		bounces++;
 	}
 	if(sqrt(pow((xPos1+(P_WIDTH/2.0) - xPos),2)) < 25 && sqrt(pow((yPos1+(P_HEIGHT/2.0) - yPos),2)) < 25 && allowHold == 1){
 		p1Held = 1;
+		bounces = 0;
 	}else if(sqrt(pow((xPos1+(P_WIDTH/2.0) - xPos),2)) < 25 && sqrt(pow((yPos1+(P_HEIGHT/2.0) - yPos),2)) < 25 && allowHold == 0 && holdCount > 3){
-		xVel *= -bounceFactor;
+		xVel *= -1.25*bounceFactor;
+		bounces++;
 	}
 	return;
 }
@@ -136,22 +141,24 @@ void ball::Update(float xPos1, float yPos1, float xPos2, float yPos2){
 		yPos = yPos2;
 	}else{
 		xMove();
-		checkxBounds();
+		bounces += checkxBounds();
 		gravity();
-		checkyBounds();
+		bounces += checkyBounds();
 		if(holdCount++ > 20){
 			allowHold = 1;
 		}
 	}
+	cout << bounces << endl;
 }
 
 //movement along xAxis
 void ball::xMove(void){	
+	xAccel = .75;
 	//If velocity is negative
-	if(xVel < -.25){
+	if(xVel < -.05){
 		xVel += (xAccel/5.0)*dTime;
 		xPos = xPos+xVel*(dTime)+.5*(xAccel/5.0)*(dTime*dTime);
-	}else if(xVel > .25){ //If velocity is positive
+	}else if(xVel > .05){ //If velocity is positive
 		xVel -= (xAccel/5.0)*dTime;
 		xPos = xPos+xVel*(dTime)-.5*(xAccel/5.0)*(dTime*dTime);	
 	}else{

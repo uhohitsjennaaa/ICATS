@@ -42,9 +42,11 @@ int main(){
 	string bg_tiles = "images/tile.bmp";
 	string goal1_tile = "images/goal1.bmp";
 	string goal2_tile = "images/goal2.bmp";
-	string figure1 = "images/dude1_small.bmp";
-	string figure2 = "images/dude2_small.bmp";
-	string ball_img = "images/ball.bmp";
+	string figure1 = "images/littleorangeleftcat.bmp";
+	//string figure2 = "images/littlewhiterightcat.bmp";
+	//.string figure1 = "images/dude1_small.bmp";
+	string figure2 = "images/dude1_small.bmp";
+	string ball_img = "images/ball.png";
 
 	//Create texture for background, and goals
 	SDL_Texture *bg = IMG_LoadTexture(ren, bg_image.c_str());
@@ -62,9 +64,6 @@ int main(){
 	//create premade arena
 	arena.makeField1();
 
-	//Create pixel field arena
-	arena.pixels();
-		
 	//Determine how many tiles we'll need to fill the screen
 	int xTiles = S_WIDTH / TILE_SIZE;
 	int yTiles = S_HEIGHT / TILE_SIZE;
@@ -76,7 +75,7 @@ int main(){
 	int quit = 0;
 
 	//initial player positions
-	int p1_x = 2*TILE_SIZE;
+	int p1_x = 5*TILE_SIZE;
 	int p1_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	int p2_x = S_WIDTH-2*TILE_SIZE;
@@ -125,7 +124,7 @@ int main(){
 			ball.throwLeft(1);
 		}
 		//If throw right
-		if(keys[SDL_SCANCODE_A] && keys[SDL_SCANCODE_D]){
+		if(keys[SDL_SCANCODE_D] && keys[SDL_SCANCODE_S]){
 			ball.throwRight(1);
 		}
 		//P1 latency, no movement updater. 
@@ -158,11 +157,11 @@ int main(){
 		P2.noMove();
 
 		//Check bounds of players
-		P1.checkxBounds();
+		/*P1.checkxBounds();
 		P2.checkxBounds();
 		P1.checkyBounds();
-		P2.checkyBounds();
-	
+		P2.checkyBounds();*/
+		
 		//Ball movement
 		ball.Update(P1.getxPos(), P1.getyPos(), P2.getxPos(), P2.getyPos());
 

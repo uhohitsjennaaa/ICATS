@@ -24,6 +24,7 @@ class playField {
 
 		//Fields
 		void makeField1(void);
+		void makeField2(void);
 
 		vector< vector< char> > vField;
 
@@ -178,6 +179,25 @@ void playField::makeField1(void){
 	//mirror
 	mirror();
 
+	return;
+}
+
+//Make second board
+void playField::makeField2(void){
+	//Add goal
+	addGoal(22,2,6,4,'$');
+	
+	//Add platforms
+	addPlatform(19,2,3,5);
+	addPlatform(28,2,3,5);
+	addPlatform(20,20,2,10);
+
+	//Border
+	addBorder(2);
+
+	//Mirror
+	mirror();
+	
 	return;
 }
 #endif
