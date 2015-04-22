@@ -1,6 +1,3 @@
-//As of 4/20: opens SDL window, changes background randomly, and creates board from playField.cpp
-//To do: timer, scoring
-
 #include "setup.h"
 
 #include <cstdio>
@@ -18,10 +15,6 @@ setup::setup(){
 	ren=NULL;
 	surf=NULL;
 	field=NULL;
-
-	imPath="./images/";
-	bgPath="bg/";
-	imExt=".bmp";
 	
 	bg=background();
 }
@@ -29,6 +22,7 @@ setup::setup(){
 setup::~setup(){
 	SDL_FreeSurface(surf);
 	SDL_FreeSurface(field);
+	SDL_DestroyRenderer(ren);
 	SDL_DestroyWindow(win);
 	SDL_Quit(); //quit SDL
 }
@@ -72,13 +66,8 @@ string setup::background(){
 	r=0;
 	
 	//os << imPath << bgPath << "b" << r << imExt;
-<<<<<<< HEAD
 	os << imPath << bgPath << "bg" << imExt;
-=======
-	os << imPath << "ocat" << imExt;
->>>>>>> 84fb94f9031e2dfedabdc8dea25b85d91301b00a
 	string s=os.str();
-	cout << s << endl;
 	return s;
 }
 
@@ -120,8 +109,6 @@ void setup::makeFieldSurf(){
 			for(int iCol = 0; iCol < S_WIDTH/TILE_SIZE; iCol++){
 				tmpRect.x=iCol*TILE_SIZE;
 				if(vField[iRow][iCol] == '#') SDL_BlitSurface(tSurf[0],NULL,surf,&tmpRect); //add tile
-// 				else if(vField[iRow][iCol] == '$') SDL_BlitSurface(tSurf[1],NULL,surf,&tmpRect); //make goal1
-// 				else if(vField[iRow][iCol] == '%') SDL_BlitSurface(tSurf[2],NULL,surf,&tmpRect); //make goal2
 			} //end for(int iCol = 0; iCol < width; iCol++)
 		} //end for (int iRow = 0; iRow < height; iRow++)
 	} //end if(tmp==NULL)...else

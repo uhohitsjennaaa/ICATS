@@ -7,10 +7,10 @@ using namespace std;
 class playField {
 	friend ostream &operator<<(ostream&,v2&); //overloaded operator for v2
 	public:
-		playField(int iHeight=400, int iWidth=600, int tileSize=10); //constructor
-		void setField(); //create full field
+		playField(); //constructor
+		void setField(); //create field
 		v2 getField(); //access vField
-// 		v2 getPix(); //access pixField
+
 	private:
 		//Helper functions to create playing field elements
 		void addBorder(int thickness); //Add border with thickness
@@ -25,19 +25,14 @@ class playField {
 		void addStart(int startRow, int startCol, int sHeight, int sWidth);
 		
 		void mirror(); //Mirror left half of board
-// 		void pixels(); //Make pixel field
 		void print(); //print board
-// 		void printPix(); //print values for each pixel
 		
 		int height;
 		int width;
 		int tSize;
 		int pHeight;
 		int pWidth;
-		int playHeight;
-		int playWidth;
 		v2 vField;
-// 		v2 pixField;
 };
 
 #endif

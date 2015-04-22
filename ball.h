@@ -4,25 +4,13 @@
 #include "physObj.h"
 using namespace std;
 
-class ball: public PhysObj{
+class ball: public physObj{
 	public:
 		ball();
-		void Update(float, float, float, float);
+		void toss(int);
+		int isHeld();
 	private:
-		int p1Held;
-		int p2Held;
-		int noHold;
+		int allowHold;
 };
-
-//Constructor
-ball::ball() : PhysObj(){
-	objWidth = 20;
-	objHeight = 20;
-}
-
-//Handle no input keys
-void ball::update(){
-
-}
 
 #endif

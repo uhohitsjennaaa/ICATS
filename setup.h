@@ -1,9 +1,6 @@
 #ifndef SETUP_H
 #define SETUP_H
 
-#include <SDL2/SDL.h>
-#include <SDL/SDL_image.h>
-#include <string>
 #include "constants.h"
 using namespace std;
 
@@ -20,9 +17,6 @@ class setup{
 		SDL_Renderer* ren;
 		SDL_Surface* surf;
 		SDL_Surface* field;
-		string imPath;
-		string bgPath;
-		string imExt;
 		string bg;
 };
 
