@@ -44,7 +44,7 @@ int main(){
 	string goal2_tile = "images/goal2.bmp";
 	string figure1 = "images/littleorangeleftcat.bmp";
 	string figure2 = "images/littlewhiterightcat.bmp";
-	//string figure1 = "images/dude1_small.bmp";
+	//.string figure1 = "images/dude1_small.bmp";
 	//string figure2 = "images/dude2_small.bmp";
 	string ball_img = "images/yarn.bmp";
 
