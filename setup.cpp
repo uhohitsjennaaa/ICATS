@@ -11,18 +11,11 @@
 #include "playField.h"
 using namespace std;
 
-typedef vector< vector <char> > v2;
-
-const int S_WIDTH=600; //set screen width
-const int S_HEIGHT=400; //set screen height
-const int TILE_SIZE=10;
-const int P_WIDTH=15;
-const int P_HEIGHT=30;
-
 setup::setup(){
 	srand(time(NULL)); //seed rand
 	
 	win=NULL;
+	ren=NULL;
 	surf=NULL;
 	field=NULL;
 
@@ -40,6 +33,13 @@ setup::~setup(){
 	SDL_Quit(); //quit SDL
 }
 
+SDL_Renderer* setup::renderer(){
+	ren=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if(ren==NULL)cout << "Renderer could not be created! SDL_Error: " << SDL_GetError() << endl;
+	
+	return ren;
+}
+
 SDL_Window* setup::window(){
 	SDL_Surface* tmp;
 	
@@ -47,15 +47,13 @@ SDL_Window* setup::window(){
 		cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
 	}else{ //create window
 		win=SDL_CreateWindow("#IDARB",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,S_WIDTH,S_HEIGHT,SDL_WINDOW_SHOWN);
-		if(win==NULL){
-			cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
-		}else{
+		if(win==NULL) cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
+		else{
 			surf=SDL_GetWindowSurface(win); //get surface
 			SDL_FillRect(surf,NULL,SDL_MapRGB(surf->format,255,255,255)); //fill white
 			tmp=SDL_LoadBMP(bg.c_str()); //get picture
-			if(tmp==NULL){
-				cout << bg << " could not be loaded! SDL_Error: " << SDL_GetError() << endl;
-			}else{
+			if(tmp==NULL) cout << bg << " could not be loaded! SDL_Error: " << SDL_GetError() << endl;
+			else{
 				SDL_BlitSurface(tmp,NULL,surf,NULL); //put image on surface
 				makeFieldSurf(); //put field on surface
 			}
@@ -74,7 +72,11 @@ string setup::background(){
 	r=0;
 	
 	//os << imPath << bgPath << "b" << r << imExt;
+<<<<<<< HEAD
+	os << imPath << bgPath << "bg" << imExt;
+=======
 	os << imPath << "ocat" << imExt;
+>>>>>>> 84fb94f9031e2dfedabdc8dea25b85d91301b00a
 	string s=os.str();
 	cout << s << endl;
 	return s;
@@ -86,7 +88,7 @@ void setup::makeFieldSurf(){
 	int err=0;
 
 	//get field info
-	playField arena(S_HEIGHT,S_WIDTH,TILE_SIZE);
+	playField arena();
 	arena.setField();
 	v2 vField=arena.getField();
 

@@ -1,65 +1,30 @@
-//Player class
-
 #ifndef PLAYER_H
 #define PLAYER_H
 
 #include <cmath>
-#include <iostream>
 #include <string>
 
-#include "phys_obj.h"
-#include "field.h"
-#include "constants.h"
-
+#include "physObj.h"
 using namespace std;
 
 class player: public PhysObj{
 	public:
-		player(float, float, playField &);
-		
+		player();
+		void jump();
 	private:
-		
 };
 
-#endif
-
-player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, arena){
-	width = 15;
-	height = 30;
+player::player() : PhysObj(x,y,40,20){
+	setPos(minX,minY);
 }
 
-//Move left
-void player::moveLeft(void){
-	xVel += -(xAcc)*dTime;
-	if(xVel < -maxVel) xVel = -maxVel;
-	xPos = xPos+xVel*(dTime)+.5*(xAcc)*(dTime*dTime);
-}
-
-//Move right
-void player::moveRight(void){
-	xVel += xAcc*dTime;
-	if(xVel > maxVel) xVel = maxVel;
-	xPos = xPos+xVel*(dTime)+.5*(xAcc)*(dTime*dTime);
-}
-
-//Handle no input keys
-void player::noMove(void){
-	//If the velocity is negative	
-	if(xVel < -0.25){
-		xVel += xAcc*dTime;
-		if(xVel < -maxVel){
-			xVel = -maxVel;
-		}	
-		xPos = xPos+xVel*(dTime)+.5*(xAcc)*(dTime*dTime);
-	}else if(xVel > 0.25){ //If velocity is positive
-		xVel += -(xAcc)*dTime;
-		if(xVel > maxVel){
-			xVel = maxVel;
-		}
-		xPos = xPos+xVel*(dTime)+.5*(xAcc)*(dTime*dTime);	
-	}else{
-		xVel = 0;
-		xPos = xPos;
+//Jump function
+void player::jump(){
+	if(jumped == 0){ //Allow jump if player is not in air from a previous jump	
+		yVel -= 15; //give initial yVelocity
+		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
+		jumped = 1;
 	}
-	cout << arena.vField[0][0];
 }
+
+#endif

@@ -1,11 +1,8 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#include <iostream>
-#include <vector>
+#include "constants.h"
 using namespace std;
-
-typedef vector< vector <char> > v2;
 
 class playField {
 	friend ostream &operator<<(ostream&,v2&); //overloaded operator for v2
@@ -42,4 +39,5 @@ class playField {
 		v2 vField;
 // 		v2 pixField;
 };
+
 #endif
