@@ -38,13 +38,15 @@ int main(){
 	}
 
 	//get image resources
-	string bg_image = "images/bg.bmp";
+	string bg_image = "images/background1.bmp";
 	string bg_tiles = "images/tile.bmp";
 	string goal1_tile = "images/goal1.bmp";
 	string goal2_tile = "images/goal2.bmp";
-	string figure1 = "images/dude1_small.bmp";
-	string figure2 = "images/dude2_small.bmp";
-	string ball_img = "images/ball.bmp";
+	string figure1 = "images/littleorangeleftcat.bmp";
+	string figure2 = "images/littlewhiterightcat.bmp";
+	//string figure1 = "images/dude1_small.bmp";
+	//string figure2 = "images/dude2_small.bmp";
+	string ball_img = "images/yarn.bmp";
 
 	//Create texture for background, and goals
 	SDL_Texture *bg = IMG_LoadTexture(ren, bg_image.c_str());
