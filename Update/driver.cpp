@@ -43,9 +43,9 @@ int main(){
 	string goal1_tile = "images/goal1.bmp";
 	string goal2_tile = "images/goal2.bmp";
 	string figure1 = "images/littleorangeleftcat.bmp";
-	//string figure2 = "images/littlewhiterightcat.bmp";
+	string figure2 = "images/littlewhiterightcat.bmp";
 	//.string figure1 = "images/dude1_small.bmp";
-	string figure2 = "images/dude1_small.bmp";
+	//string figure2 = "images/dude1_small.bmp";
 	string ball_img = "images/ball.png";
 
 	//Create texture for background, and goals
