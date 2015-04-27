@@ -1,3 +1,5 @@
+//User Manual (Report)
+
 //Special Libraries
   In order to compile our program, the only special libraries needed are:
     - SDL2 
@@ -32,6 +34,6 @@
 //Bugs
   //Collision System
   The collision system is the main source of errors in the program. Oftentimes, the player and the ball will clip through various places in the arena. Usually it's only through corners of thin platforms, but more rarely they will go through the boundaries of the arena, disappearing beyond the visible game window. This may result in a segmentation fault if it happens in a certain way, but hopefully that will not be the case when you're in the middle of a heated game. 
-  //Blocking
-  When a player attempts to block a shot and the ball is moving at a high velocity, the ball may simply go through the player and a block may not occur. This is not gamebreaking, but it could provide some unexpected moments during gameplay. 
+  //Blocking Shots
+  When a player attempts to block a shot and the ball is moving at a high velocity, the ball may simply go through the player and a block may not occur. This is not game-breaking, but it could provide some unexpected moments during gameplay. 
   
