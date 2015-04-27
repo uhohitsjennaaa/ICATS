@@ -1,16 +1,17 @@
-all: main
+CXX = g++
+FLAGS = -lSDL2 -lSDL2_image -o
 
-player: player.cpp physObj.cpp
-	g++ player.cpp physObj.cpp -lSDL2 -o main
+HEADER = constants.h setup.h physObj.h ball.h player.h playField.h
+CPP = setup.cpp physObj.cpp ball.cpp player.cpp playField.cpp
+MAIN = main.cpp
+OUTPUT = main
 
-ball: ball.cpp physObj.cpp
-	g++ ball.cpp physObj.cpp -lSDL2 -o main
+all: run
 
-setup: setup.cpp playField.cpp
-	g++ setup.cpp playField.cpp -lSDL2 -o main
+run : $(OUTPUT)
 
-main: main.cpp setup.cpp ball.cpp player.cpp
-	g++ main.cpp setup.cpp ball.cpp player.cpp -lSDL2 -o main
-	
-clean:
-	rm *.o main
+$(OUTPUT) : $(MAIN) $(HEADER)
+	$(CXX) $(MAIN) $(CPP) $(FLAGS) $(OUTPUT)
+
+clean :
+	rm -f *.o

@@ -8,9 +8,11 @@ class ball: public physObj{
 	public:
 		ball();
 		void toss(int);
-		int isHeld();
+		void reset();
+		void setPos(float,float);
+		int getBounces();
 	private:
-		int allowHold;
+		int bounce;
 };
 
 #endif

@@ -7,28 +7,32 @@ using namespace std;
 
 class physObj{
 	public: 
-		physObj(); //Constructor
-		SDL_Rect update();
-		SDL_Surface *getSurf();
+		physObj(); //constructor
+		~physObj(); //destructor
+		SDL_Rect* update();
+		SDL_Surface* getSurf();
 		
-		void setPos(float,float);
-		void setVel(float,float);
-		void setAcc(float,float);
+		virtual void setPos(float,float)=0; //set position
+		physObj& operator+=(int); //change direction and magnitude of velocity
+		float getV(); //return xVel
+		
+		int distance(float,float); //return 1 if within 1 TILE_SIZE of eachother
 		
 	protected:
 		int objHeight;
 		int objWidth;
-		int n; //identifier number
+		string s;
 		
 		//global variables
 		int width;
 		int height;
 		int windMult; //window multiplier
+		int thickness;
+		int border;
 		
 		//playing field bounds
-		int minX;
+		int mins;
 		int maxX;
-		int minY;
 		int maxY;
 		
 		//object variables
@@ -38,12 +42,14 @@ class physObj{
 		float yVel;
 		float xAcc;
 		float yAcc;
-		float maxVel;
-		float maxAcc;
+		float maxXVel;
+		float maxYVel;
 		float dTime;
 		
 		SDL_Rect objRect;
 		SDL_Surface *objSurf;
+		
+		void setVel(float,float);
 };
 
 #endif

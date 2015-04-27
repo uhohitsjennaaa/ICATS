@@ -8,12 +8,11 @@ class playField {
 	friend ostream &operator<<(ostream&,v2&); //overloaded operator for v2
 	public:
 		playField(); //constructor
-		void setField(); //create field
-		v2 getField(); //access vField
+		v2 makeField(); //create field
 
 	private:
 		//Helper functions to create playing field elements
-		void addBorder(int thickness); //Add border with thickness
+		void addBorder(); //Add border with thickness
 		
 		//Build platform from top left to bottom right
 		void addPlatform(int startRow, int startCol, int pHeight, int pWidth); 
@@ -30,6 +29,7 @@ class playField {
 		int height;
 		int width;
 		int tSize;
+		int thickness;
 		int pHeight;
 		int pWidth;
 		v2 vField;

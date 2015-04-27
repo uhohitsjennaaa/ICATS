@@ -5,6 +5,7 @@ using namespace std;
 
 playField::playField(){
 	tSize=TILE_SIZE;
+	thickness=B_THICKNESS;
 	pHeight=S_HEIGHT;
 	pWidth=S_WIDTH;
 	height=pHeight/tSize;
@@ -18,30 +19,20 @@ playField::playField(){
 	tempVec.clear();
 }
 
-void playField::addBorder(int thickness){
-	//Top border
-	for(int iRow=0; iRow<thickness; iRow++)
-		for(int iCol=0; iCol<width; iCol++)
-			vField[iRow][iCol] = '#';
+void playField::addBorder(){
+	//top and bottom borders
+	for(int iRow1=0, iRow2=height-1; iRow1<thickness && iRow2>=height-thickness; iRow1++,iRow2--)
+		for(int iCol=0; iCol<width; iCol++){
+			vField[iRow1][iCol] = '#';
+			vField[iRow2][iCol] = '#';
+		}
 
-	//bottom border
-	for(int iRow=height-1; iRow>=height-thickness; iRow--)
-		for(int iCol=0; iCol<width; iCol++)
-			vField[iRow][iCol] = '#';
-
-	//left border
-	for(int iCol=0; iCol<thickness; iCol++)
-		for(int iRow=0; iRow<height; iRow++)
-			vField[iRow][iCol] = '#';
-
-	//Right border
-	for(int iCol=width-1; iCol>=width-thickness; iCol--)
-		for(int iRow=0; iRow<height; iRow++)
-			vField[iRow][iCol] = '#';
-
-	//Change playing dimensions of field
-	playHeight = pHeight - thickness*tSize;
-	playWidth = pWidth - thickness*tSize;
+	//side borders
+	for(int iCol1=0, iCol2=width-1; iCol1<thickness && iCol2>=width-thickness; iCol1++,iCol2--)
+		for(int iRow=0; iRow<height; iRow++){
+			vField[iRow][iCol1] = '#';
+			vField[iRow][iCol2] = '#';
+		}
 }
 
 void playField::addPlatform(int startRow, int startCol, int plHeight, int plWidth){
@@ -58,12 +49,14 @@ void playField::addGoal(int startRow, int startCol, int gHeight, int gWidth){
 			vField[iRow][iCol] = '%';
 }
 
+/*
 void playField::addStart(int startRow, int startCol, int sHeight, int sWidth){
 	//loop through area of platform and create it, check bounds also
 	for(int iRow=startRow; iRow<startRow+sHeight && iRow>0 && iRow<height; iRow++)
 		for(int iCol=startCol; iCol<startCol+sWidth && iCol>0 && iCol<width; iCol++)
 			vField[iRow][iCol] = '1';
 }
+*/
 
 void playField::mirror(){
 	//iterate through left half and copy to right half
@@ -76,32 +69,22 @@ void playField::mirror(){
 		} //end for(int iCol=0; iCol<width-1/2; iCol++)
 }
 
-void playField::setField(){
+v2 playField::makeField(){
 	addGoal(8,1,6,6); //create goal
 
-	//Add platforms surrounding goal
-	addPlatform(7,1,1,7);
-	addPlatform(14,1,1,7);
+	addPlatform(7,1,1,7); //above goal
+	addPlatform(14,1,1,7); //below goal
 	addPlatform(8,7,1,1);
 	addPlatform(13,7,1,1);
-	
-// 	//Add middle top
-// 	addPlatform(2,28,10,1);
-// 	addPlatform(10,24,1,4);
 
 	addPlatform(18,21,1,9); //Add top floor
 	addPlatform(23,5,1,9); //Add middle floor
 	addPlatform(28,25,1,5); //Add middle floor
 	addPlatform(33,15,1,8); //Add bottom floor
 	
-	addBorder(1); //Add border
+	addBorder(); //Add border
 	mirror(); //mirror
 	
-// 	pixels();
-// 	return;
-}
-
-v2 playField::getField(){
 	return vField;
 }
 
