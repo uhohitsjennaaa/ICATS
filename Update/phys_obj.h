@@ -41,6 +41,8 @@ class PhysObj{
 		playField arena;
 		
 		float xPos;
+		float initxPos;
+		float inityPos;
 		float yPos;
 		float xVel;
 		float maxxVel;
@@ -63,6 +65,8 @@ class PhysObj{
 PhysObj::PhysObj(float ixPos, float iyPos, float bounce, int iwidth, int iheight, playField &field){
 	xPos = ixPos;
 	yPos = iyPos;
+	initxPos = ixPos;
+	inityPos = iyPos;
 	xVel = 0;
 	maxxVel = 7;
 	yVel = 0;

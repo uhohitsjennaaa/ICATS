@@ -53,8 +53,9 @@ ball::ball(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .
 void ball::reset(void){
 	p1Held = 0;
 	p2Held = 0;
-	xPos = (S_WIDTH/2);
-	yPos = (S_HEIGHT/2);
+	xVel  = 0;
+	xPos = initxPos;
+	yPos = inityPos;
 }
 
 //Find close player and see if they grab the ball
@@ -141,12 +142,13 @@ int ball::inGoal(void){
 
 //See if player scores, return player who did
 int ball::score(void){
-	if(inGoal()==1){
+	int scoring = inGoal();
+	if(scoring ==1){
 		cout << "Player 1 Scores!" << endl;
 		cout << "Score:" << endl;
 		cout << p1Score << ":" << p2Score << endl;
 		return 1;
-	}else if(inGoal()==2){
+	}else if(scoring != 0){
 		cout << "Player 2 Scores!" << endl;
 		cout << "Score:" << endl;
 		cout << p1Score << ":" << p2Score << endl;

@@ -25,6 +25,9 @@
       - 'I' : Jump
       - 'J'+'K' : Throw left
       - 'L'+'K' : Throw right
+
+		Quitting:
+			- 'ESC' : Quit the game
   //Gameplay
   The goal of the game is to simply score on the other player's goal, but it isn't as simple as it sounds. Once a player runs over the ball, he/she will pick the ball up and then be able to run around the arena in an attempt to get closer to the goal for a better shot. However, if the other player runs into the player holding the ball, the ball will be knocked loose and can be grabbed by any whichever character reaches the ball again first. 
   If the offensive player finds a suitable place and decides to take a shot, he/she shoots in the desired direction and hopes that the ball can make it to the goal. The defensive player can even get in front of the shot and block the shot if he/she can get there in time, but if not, it's a goal for the offensive player!

@@ -18,6 +18,7 @@ class player: public PhysObj{
 		void moveRight(void);
 		void noMove(void);
 		void jump(void);
+		void reset(void);
 	private:
 };
 
@@ -26,6 +27,13 @@ class player: public PhysObj{
 //Constructor
 player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .15, 15, 30, arena){
 	return;
+}
+
+void player::reset(void){
+	xVel = 0;
+	yVel = 0;
+	xPos = initxPos;
+	yPos = inityPos;
 }
 
 //Move left

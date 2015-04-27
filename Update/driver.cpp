@@ -42,8 +42,8 @@ int main(){
 	string bg_tiles = "images/tile.bmp";
 	string goal1_tile = "images/goal1.bmp";
 	string goal2_tile = "images/goal2.bmp";
-	string figure1 = "images/littleorangeleftcat.bmp";
-	string figure2 = "images/littlewhiterightcat.bmp";
+	string figure1 = "images/player1.png";
+	string figure2 = "images/player2.png";
 	//.string figure1 = "images/dude1_small.bmp";
 	//string figure2 = "images/dude1_small.bmp";
 	string ball_img = "images/ball.png";
@@ -62,7 +62,7 @@ int main(){
 	playField arena;
 	
 	//create premade arena
-	arena.makeField2();
+	arena.makeField1();
 
 	//Determine how many tiles we'll need to fill the screen
 	int xTiles = S_WIDTH / TILE_SIZE;
@@ -78,7 +78,7 @@ int main(){
 	int p1_x = 5*TILE_SIZE;
 	int p1_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
-	int p2_x = S_WIDTH-2*TILE_SIZE;
+	int p2_x = S_WIDTH-5*TILE_SIZE-P_WIDTH;
 	int p2_y = S_HEIGHT-2*TILE_SIZE-P_HEIGHT;
 
 	//Instantiate player handlers
@@ -87,7 +87,7 @@ int main(){
 	PhysObj * pP1 = &P1;
 	player P2(p2_x, p2_y, arena);
 	PhysObj * pP2 = &P2;
-	ball ball(200,200,arena);
+	ball ball(S_WIDTH/2-TILE_SIZE/2,350,arena);
 	PhysObj * pBall = &ball;
 	ball.reset();
 
@@ -156,17 +156,14 @@ int main(){
 		}
 		//P2 latency, no movement updater. 
 		P2.noMove();
-
-		//Check bounds of players
-		/*P1.checkxBounds();
-		P2.checkxBounds();
-		P1.checkyBounds();
-		P2.checkyBounds();*/
 		
 		//Ball movement
 		ball.Update(P1.getxPos(), P1.getyPos(), P2.getxPos(), P2.getyPos());
 
-		ball.score();
+		if(ball.score() != 0){
+			P1.reset();
+			P2.reset();
+		}
 
 		//Draw the tiles by using the vector fields
 		for (int iRow = 0; iRow < S_HEIGHT / 10; iRow++){
