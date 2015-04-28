@@ -38,7 +38,7 @@ int main(){
 	}
 
 	//get image resources
-	string bg_image = "images/background1.bmp";
+	string bg_image = "images/bg.bmp";
 	string bg_tiles = "images/tile.bmp";
 	string goal1_tile = "images/goal1.bmp";
 	string goal2_tile = "images/goal2.bmp";
