@@ -75,7 +75,7 @@ SDL_Rect* physObj::update(){
 	float tmpX,tmpY,tmpVx,tmpVy;
 	
 	if(xVel==0) xAcc=0;
-	else xAcc=.5;
+	else xAcc=.75;
 	
 	tmpVx = xVel+xAcc*dTime;
 	tmpVy = yVel+yAcc*dTime;

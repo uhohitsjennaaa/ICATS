@@ -34,7 +34,7 @@ void ball::reset(){
 
 void ball::setPos(float x,float y){
 	if(x <= mins-2 || x >= maxX+2){
-		xVel*=-.75;
+		xVel*=-1;
 		bounce++;
 	}else xPos=x;
 	
