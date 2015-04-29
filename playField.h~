@@ -1,5 +1,5 @@
 /*
-This is the playField class declaration. This class is used to creat the playing field as a matrix in which borders, platforms, and goals are represented by special characters. This class is mostly composed of helper functions that change the values of specified elements of the matrix and are all used in the makeFielf() function to create and output the final field matrix.
+This is the playField class declaration. This class is used to creat the playing field as a matrix in which borders, platforms, and goals are represented by special characters. This class is mostly composed of helper functions that change the 
 */
 
 #ifndef FIELD_H

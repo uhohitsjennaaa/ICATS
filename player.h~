@@ -18,7 +18,7 @@ class player: public physObj{
 		void setBall(int); //sets possesion of ball
 		int isFlipped(); //check if flipped image
 		void setFlip(int); //saves if the image is currently flipped or not
-		player& operator++(); //adds to score
+		
 		player& operator+=(int); //changes velocity to move
 	private:
 		static int num; //player counter within class

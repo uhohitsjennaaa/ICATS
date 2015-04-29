@@ -1,4 +1,9 @@
+/*
+This is the member function definition for the class physObj.  Many of these functions are mathematical manipulations to determine movement, including functions to check for bounds and platforms.
+*/
+
 #include "physObj.h"
+
 #include <cmath>
 using namespace std;
 
@@ -6,11 +11,10 @@ physObj::physObj(){
 	//set initial velocities
 	xVel = 0;
 	yVel = 0;
-	xAcc = 1;
+	xAcc = 0;
 	yAcc = .5;
 	maxXVel = 8;
-	maxYVel = 12;
-// 	maxAcc = 5;
+	maxYVel = 8;
 	dTime = 1;
 	
 	width = S_WIDTH;
@@ -19,35 +23,33 @@ physObj::physObj(){
 	thickness = B_THICKNESS;
 	border = windMult*thickness;
 	
-	mins = border;
+	mins = border-1;
 }
 
 physObj::~physObj(){
 	SDL_FreeSurface(objSurf);
 }
 
-/*void physObj()::move(){
-	xVel += xAcc*dTime;
-	if(xVel < -maxVel) xVel = -maxVel;
-	else if(xVel > maxVel) xVel = maxVel;
-	xPos = xPos+xVel*(dTime)+.1*(xAcc)*(dTime*dTime);
-
-	yVel += yAcc*dTime;
-	if(yVel < -maxVel) yVel = -maxVel;
-	else if(yVel > maxVel) yVel = maxVel;
-	yPos = yPos + yVel*(dTime)+.1*(yAcc)*(dTime*dTime);
-}
-
 void physObj::setPos(float x,float y){
-	if(x < mins) xPos = mins;
-	else if(x > maxX) xPos = maxX;
-	else xPos = x;
-	
-	if(y < mins) yPos = mins;
-	else if(y > maxY) yPos = maxY;
-	else yPos = y;
+	if(x <= mins){
+		xVel*=bFactor;
+		xPos = mins+xVel*(dTime)+.1*(xAcc)*(dTime*dTime);
+	}else if(x >= maxX){
+		xVel*=bFactor;
+		xPos = maxX+xVel*(dTime)+.1*(xAcc)*(dTime*dTime);
+	}else xPos=x;
+
+	if(y <= mins){
+		yVel*=bFactor;
+		yPos = mins+yVel*(dTime)+.1*(yAcc)*(dTime*dTime);
+	}else if(y >= maxY){
+		yVel*=bFactor;
+		yPos = maxY+yVel*(dTime)+.1*(yAcc)*(dTime*dTime);
+	}else if(y==yPlat && yVel>0){
+		yVel*=bFactor;
+		yPos = y+yVel*(dTime)+.1*(yAcc)*(dTime*dTime);
+	}else yPos=y;
 }
-*/
 
 void physObj::setVel(float x,float y){
 	if(x < -maxXVel) xVel = -maxXVel;
@@ -59,24 +61,10 @@ void physObj::setVel(float x,float y){
 	else yVel = y;
 }
 
-/*
-void physObj::setAcc(float x,float y){
-	if(x < -maxAcc) xAcc = -maxAcc;
-	else if(x > maxAcc) xVel = maxAcc;
-	else xAcc = x;
-	
-	if(y < -maxAcc) yAcc = -maxAcc;
-	else if(y > maxAcc) yVel = maxAcc;
-	else yAcc = y;
-}
-*/
-
-SDL_Rect* physObj::update(){
+SDL_Rect* physObj::update(v2* field){
 	float tmpX,tmpY,tmpVx,tmpVy;
-	
-	if(xVel==0) xAcc=0;
-	else xAcc=.5;
-	
+	yPlat=isOnPlatform(*field);
+
 	tmpVx = xVel+xAcc*dTime;
 	tmpVy = yVel+yAcc*dTime;
 	
@@ -85,7 +73,8 @@ SDL_Rect* physObj::update(){
 	tmpX = xPos+xVel*(dTime)+.1*(xAcc)*(dTime*dTime);
 	tmpY = yPos+yVel*(dTime)+.5*(yAcc)*(dTime*dTime);
 	
-	setPos(tmpX,tmpY);
+	if(yPlat>0 && yVel>0) setPos(tmpX,yPlat);
+	else setPos(tmpX,tmpY);
 	
 	objRect.x=xPos;
 	objRect.y=yPos;
@@ -97,12 +86,8 @@ SDL_Surface* physObj::getSurf(){
 	return objSurf;
 }
 
-physObj& physObj::operator+=(int i){
-	if(xAcc==0) xVel=i;
-	else xVel+=i*xAcc*dTime;
-	xPos+=xVel*(dTime)+.1*i*(xAcc)*(dTime*dTime);
-	
-	return (* this);
+string physObj::getImgFile(){
+	return s;
 }
 
 float physObj::getV(){
@@ -110,17 +95,14 @@ float physObj::getV(){
 }
 
 int physObj::distance(float x,float y){
-	if(sqrt(pow(xPos-x,2)+pow(yPos-y,2))<=2*TILE_SIZE+5) return 1;
-// 	cout << xPos << "_" << x << "_" << xPos-x << "_" << TILE_SIZE+5 << endl;
+	if(x>xPos-TILE_SIZE && x<xPos+objWidth && y>=yPos-1 && y<yPos+objHeight) return 1;
 	return 0;
 }
 
-/*
-float physObj::getX(){
-	return xPos;
+int physObj::isOnPlatform(v2 field){
+	int x=floor(xPos/TILE_SIZE);
+	int y=floor((yPos+objHeight)/TILE_SIZE);
+	for(int i=x;i<=x+1;i++) //check for platform under object		
+		if(x>0 && x<S_WIDTH/TILE_SIZE-2 && yVel>=0 && field[y][i]=='#') return TILE_SIZE*floor(yPos/TILE_SIZE);
+	return 0;
 }
-
-float physObj::getY(){
-	return yPos;
-}
-*/

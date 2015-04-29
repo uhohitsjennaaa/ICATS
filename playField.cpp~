@@ -1,7 +1,3 @@
-/*
-This is the member function definition.  This class is used to creat the playing field as a matrix in which borders, platforms, and goals are represented by special characters.
-*/
-
 #include "playField.h"
 
 #include <algorithm>

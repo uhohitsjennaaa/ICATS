@@ -45,7 +45,7 @@ int player::getNum(){
 }
 
 int player::getScore(){
-	return score;
+	return score++;
 }
 
 void player::jump(){
@@ -74,10 +74,6 @@ int player::isFlipped(){
 
 void player::setFlip(int f){
 	flip=f;
-}
-
-player& player::operator++(){ //add to score
-	score++;
 }
 
 player& player::operator+=(int i){ //move

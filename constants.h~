@@ -1,5 +1,5 @@
 /*
-This is simply a header to include libraries, global const variables, and typedef names.  The global const variables not only declutter the classes by not requiring all of the variables to be passed around, but it allows another user to more easily change these vital settings as they so desire without having to search through all of the files to replace what they need to.
+This is simply a header to include libraries, global const variables, and typedef names.  The global const variables not only declutter the classes by not requiring all of the variables to be passed around, but it allows another user to change these vital settings as they so desire.
 */
 
 #ifndef CONSTANTS_H

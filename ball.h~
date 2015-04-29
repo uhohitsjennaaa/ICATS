@@ -1,7 +1,3 @@
-/*
-This is the ball class declaration.  Since most of the ball's functionality comes from the physObj class, this class only includes a few functions to initalize appropriate variables, reset position, and change velocity randomly if tossed.
-*/
-
 #ifndef BALL_H
 #define BALL_H
 
