@@ -12,12 +12,15 @@
 #include "ball.h"
 #include "constants.h"
 #include <iostream>
-#include<SDL2/SDL_audio.h>
+#include<SDL/SDL_mixer.h>
+#include<string>
+#include"sound.h"
+
 using namespace std;
 
 int main(){
 	//initialize SDL	
-	if (SDL_Init(SDL_INIT_VIDEO) != 0){
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0){
 		cout << "SDL_Init Error: " << SDL_GetError() << endl;
 		return 1;
 	}
@@ -55,9 +58,7 @@ int main(){
 	SDL_Texture *player1 = IMG_LoadTexture(ren, figure1.c_str());
 	SDL_Texture *player2 = IMG_LoadTexture(ren, figure2.c_str());
 	SDL_Texture *ball_tex = IMG_LoadTexture(ren, ball_img.c_str());
-
-			
-
+	
 	//Initialize playing field
 	playField arena;
 	
@@ -91,9 +92,14 @@ int main(){
 	PhysObj * pBall = &ball;
 	ball.reset();
 
+	sound bgm("bgm.wav");
+
 	//Instantiate ball handler
 
 	while(!quit){
+
+		bgm.play();		
+
 		//Clear screen
 		renderTexture(bg,ren,0,0,S_WIDTH,S_HEIGHT);
 		
@@ -106,6 +112,12 @@ int main(){
 		//quit if user presses escape
 		if(keys[SDL_SCANCODE_ESCAPE]){
 			quit = 1;
+		}
+		
+		
+		if(keys[SDL_SCANCODE_O]){
+			Mix_HaltMusic();
+			break;
 		}
 
 		//Player 1 controls
@@ -189,6 +201,8 @@ int main(){
 		SDL_RenderPresent(ren);
 	}
 
+	bgm.stop();
+	Mix_Quit();
 	SDL_DestroyTexture(field);
 	SDL_DestroyTexture(goal1);
 	SDL_DestroyTexture(goal2);
