@@ -21,20 +21,18 @@ class sound
 	private:
 		string filename; //name of song
 		Mix_Music *song; // file loaded
-		int loaded; //says if song is loaded
+	//	int loaded; //says if song is loaded
 
 };
 
 #endif
 
 sound::sound(){ 
-        loaded = 0; 
         song = NULL; 
 
 }
 
 sound::sound(string music){
-        loaded = 0;
         song = NULL;
         load(music); 
 }
@@ -62,13 +60,9 @@ void sound::stop(){
 void sound::load(string music){
         music = "images/"+music; //add file path
 
-        if (loaded == 0){
         	song = Mix_LoadMUS(music.c_str()); // load music if coder specifies music type
 
                 if (song == NULL){
                         cout << "error loading music " << music << Mix_GetError() << endl; //error thrown
-                }
-                loaded = 1;
-        }
-
+		}
 }
