@@ -1,5 +1,6 @@
-//Driver file for program, includes sdl inner workings, reads keypresses, and displays.
-// g++ driver.cpp field.cpp -lSDL2 -lSDL2_image
+/*Driver file for program, includes sdl inner workings, reads keypresses, and displays.
+ *g++ driver.cpp field.cpp -lSDL2 -lSDL2_image
+ */
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -11,6 +12,7 @@
 #include "ball.h"
 #include "constants.h"
 #include <iostream>
+#include<SDL2/SDL_audio.h>
 using namespace std;
 
 int main(){
@@ -21,7 +23,7 @@ int main(){
 	}
 
 	//Create the window, handle error
-	SDL_Window *window = SDL_CreateWindow("Hello World!", 100, 100, S_WIDTH, S_HEIGHT, SDL_WINDOW_SHOWN);
+	SDL_Window *window = SDL_CreateWindow("icats", 100, 100, S_WIDTH, S_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == NULL){
 		cout << "SDL_CreateWindow Error: " << SDL_GetError() << endl;
 		SDL_Quit();
@@ -35,8 +37,7 @@ int main(){
 		cout << "SDL_CreateRenderer Error: " << SDL_GetError() << endl;
 		SDL_Quit();
 		return 1;
-	}
-
+	}	
 	//get image resources
 	string bg_image = "images/background1.bmp";
 	string bg_tiles = "images/tile.bmp";
@@ -44,8 +45,6 @@ int main(){
 	string goal2_tile = "images/goal2.bmp";
 	string figure1 = "images/player1.png";
 	string figure2 = "images/player2.png";
-	//.string figure1 = "images/dude1_small.bmp";
-	//string figure2 = "images/dude1_small.bmp";
 	string ball_img = "images/ball.png";
 
 	//Create texture for background, and goals
@@ -57,6 +56,7 @@ int main(){
 	SDL_Texture *player2 = IMG_LoadTexture(ren, figure2.c_str());
 	SDL_Texture *ball_tex = IMG_LoadTexture(ren, ball_img.c_str());
 
+			
 
 	//Initialize playing field
 	playField arena;
@@ -197,7 +197,6 @@ int main(){
 	SDL_DestroyRenderer(ren);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-}
-	
 
+}
 
