@@ -41,5 +41,7 @@
   When a player attempts to block a shot and the ball is moving at a high velocity, the ball may simply go through the player and a block may not occur. This is not game-breaking, but it could provide some unexpected moments during gameplay. The shot blocking mechanic happens as a factor of time the ball has been in the air, so if a player tries to pick up a recently thrown ball, it may just bounce of the player as well.
  
 //Wishlist
-	//Scoreboard
-	We were not able to get a scoreboard implemented on screen, however the score is kept track of and displayed in the terminal. 
+  //Scoreboard
+  We were not able to get a scoreboard implemented on screen, however the score is kept track of and displayed in the terminal. 
+  //Organiztion
+  The github repository is a mash-up of different files. We did our best to clean it up, but mainly jus stay in the master folder, otherwise, who knows where you'll end up.
