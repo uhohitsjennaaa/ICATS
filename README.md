@@ -1,1 +1,1 @@
-We should meet before people continue... we are nearing the end and lots of changes have been made.
+Please see the User's Manual for project information.
