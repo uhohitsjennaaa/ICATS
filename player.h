@@ -1,31 +1,93 @@
-/*
-This is the player class declaration. Much like the ball class, this class mostly contains simple functions to keep track of score, ball possession, and direction.  It also adds a jump functionality and uses a static int to count the number of players, which is used in determining which image file to load as the character.
-*/
+//Player class
+
+#include <iostream>
+#include <cmath>
+#include <string>
+#include "phys_obj.h"
+#include "field.h"
+#include "constants.h"
+using namespace std;
 
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "physObj.h"
-using namespace std;
-
-class player: public physObj{
+class player: public PhysObj{
 	public:
-		player(); //constructor
-		void jump(); //jumping movement
-		static int getNum(); //player number
-		int getScore(); //increments and returns score
-		int hasBall(); //1 if has ball, 0 if not
-		void setBall(int); //sets possesion of ball
-		int isFlipped(); //check if flipped image
-		void setFlip(int); //saves if the image is currently flipped or not
-		player& operator++(); //adds to score
-		player& operator+=(int); //changes velocity to move
+		player(float, float, playField &);
+		void moveLeft(void);
+		void moveRight(void);
+		void noMove(void);
+		void jump(void);
+		void reset(void);
 	private:
-		static int num; //player counter within class
-		int n; //player number
-		int score;
-		int ball; //1 if has ball, 0 if not
-		int flip; //1 if image is flipped, 0 if not
 };
 
 #endif
+
+//Constructor
+player::player(float ixPos, float iyPos, playField &arena) : PhysObj(ixPos, iyPos, .15, 15, 30, arena){
+	return;
+}
+
+void player::reset(void){
+	xVel = 0;
+	yVel = 0;
+	xPos = initxPos;
+	yPos = inityPos;
+}
+
+//Move left
+void player::moveLeft(void){
+	xVel -= xAccel*dTime;
+	if(xVel < -maxxVel){
+		xVel = -maxxVel;
+	}	
+	xPos = xPos+xVel*(dTime)-.5*(xAccel/5.0)*(dTime*dTime);
+	checkxBounds();
+}
+
+//Move right
+void player::moveRight(void){
+	xVel += xAccel*dTime;
+	if(xVel > maxxVel){
+		xVel = maxxVel;
+	}	
+	xPos = xPos+xVel*(dTime)+.5*(xAccel/5.0)*(dTime*dTime);
+	checkxBounds();
+}
+
+//Handle no input keys
+void player::noMove(void){
+	//If the velocity is negative	
+	if(xVel < -1){
+		xVel += (xAccel/5.0)*dTime;
+		if(xVel < -maxxVel){
+			xVel = -maxxVel;
+		}	
+		xPos = xPos+xVel*(dTime)+.5*(xAccel/5.0)*(dTime*dTime);
+	}else if(xVel > 1){ //If velocity is positive
+		xVel -= (xAccel/5.0)*dTime;
+		if(xVel > maxxVel){
+			xVel = maxxVel;
+		}
+		xPos = xPos+xVel*(dTime)-.5*(xAccel/5.0)*(dTime*dTime);	
+	}else{
+		xVel = 0;
+		xPos = xPos;
+	}
+	checkxBounds();
+	gravity();
+	checkyBounds();
+}
+
+//Jump function
+void player::jump(void){
+	//Allow jump if player is not in air from a previous jump	
+	if(jumped == 0){
+		//give initial yVelocity 
+		yVel -= 14;
+		yPos = yPos + yVel*(dTime)+.5*(yAccel)*(dTime * dTime);
+		jumped = 1;
+	}
+	checkyBounds();
+}

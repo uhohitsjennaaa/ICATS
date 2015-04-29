@@ -1,0 +1,23 @@
+CMP = g++
+CLASS1 = phys_obj
+CLASS2 = field
+MAIN = driver
+EXEC = driver
+FLAGS = -lSDL2 -lSDL2_image
+
+all: $(EXEC)
+
+$(EXEC): $(CLASS1).o $(CLASS2).o $(MAIN).o
+	$(CMP) $(CLASS1).o $(CLASS2).o $(MAIN).o $(FLAGS) -o $(EXEC)
+
+$(CLASS1).o: $(CLASS1).cpp $(CLASS1).h
+	$(CMP) -c $(CLASS1).cpp $(FLAGS) -o $(CLASS1).o
+
+$(CLASS2).o: $(CLASS2).cpp $(CLASS2).h
+	$(CMP) -c $(CLASS2).cpp $(FLAGS) -o $(CLASS2).o
+
+$(MAIN).o: $(MAIN).cpp $(CLASS1).h $(CLASS2).h
+	$(CMP) -c $(MAIN).cpp $(FLAGS) -o $(MAIN).o
+
+clean:
+	rm -f *.o $(EXEC) 
