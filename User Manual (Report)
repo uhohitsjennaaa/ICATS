@@ -4,6 +4,7 @@
   In order to compile our program, the only special libraries needed are:
     - SDL2 
     - SLD2_Image 
+    - SDL_mixer
   All other libraries should be standard on the machines and should not cause any issues when compiling. 
 
 //Compiling
@@ -11,7 +12,7 @@
   
 //User's Manual
   //Controls
-  The game is very simple to play, but is definitely more fun with two players. The controls are as follows:
+  The game is very simple to play, but is intended to be played by two players. The controls are as follows:
     Player One:
       - 'A' : Move left
       - 'D' : Move right
@@ -28,11 +29,12 @@
 
 		Quitting:
 			- 'ESC' : Quit the game
+			
   //Gameplay
   The goal of the game is to simply score on the other player's goal, but it isn't as simple as it sounds. Once a player runs over the ball, he/she will pick the ball up and then be able to run around the arena in an attempt to get closer to the goal for a better shot. However, if the other player runs into the player holding the ball, the ball will be knocked loose and can be grabbed by any whichever character reaches the ball again first. 
   If the offensive player finds a suitable place and decides to take a shot, he/she shoots in the desired direction and hopes that the ball can make it to the goal. The defensive player can even get in front of the shot and block the shot if he/she can get there in time, but if not, it's a goal for the offensive player!
   //Scoring
-  The scoring system works in a way that rewards tricky and high-risk shots. Each time the ball bounces on its way to the goal, the more points the goal is worth. If the ball bounces once before making it into the goal, the goal is worth two points instead of one. If it bounces three times, the goal is worth 4 and so on. It adds a twist that means the defender must always be alert and conscious of stopping the long-range and spectacular shots. 
+  The scoring system works in a way that rewards fancier shots. Each time the ball bounces on its way to the goal, the more points the goal is worth. If the ball bounces once before making it into the goal, the goal is worth two points instead of one. If it bounces two times, the goal is worth 3 and so on. It adds a twist that means the defender must always be alert and conscious of stopping the long-range and spectacular shots. 
   
 //Bugs
   //Collision System
