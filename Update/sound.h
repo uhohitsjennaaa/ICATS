@@ -15,12 +15,11 @@ class sound
 		sound();//default constructor
 		sound(string); //constructor that loads song
 		void play(); //plays song
-		void pause(); //pauses song, only works for music, not effects
+		void pause(); //pauses song
 		void stop(); // stops music
 		void load(string); //loads song
 	private:
 		string filename; //name of song
-		Mix_Chunk *effect; //file loaded
 		Mix_Music *song; // file loaded
 		int loaded; //says if song is loaded
 
@@ -28,32 +27,25 @@ class sound
 
 #endif
 
-sound::sound(){ //default constructor
-        loaded = 0; //not loaded
-        effect = NULL; //set variables to NULL
-        song = NULL; //set variables to NULL
+sound::sound(){ 
+        loaded = 0; 
+        song = NULL; 
 
 }
 
 sound::sound(string music){
-        loaded = 0; //loaded to zero
-        effect = NULL; //sets variables to NULL
+        loaded = 0;
         song = NULL;
-        load(music); //loads song into variable
+        load(music); 
 }
 
-void sound::play(){ //plays sound{
+void sound::play(){ 
         if (song != NULL && Mix_PlayingMusic() == 0){
                 Mix_PlayMusic(song,-1);
         }
-        if (song != NULL && Mix_PlayingMusic() != 0 && Mix_PausedMusic() == 1){ //resumes music if paused{
+        if (song != NULL && Mix_PlayingMusic() != 0 && Mix_PausedMusic() == 1){ //resumes music if paused
                 Mix_ResumeMusic();
         }
-        if (effect != NULL){
-                Mix_PlayChannel(-1, effect, 0); //play soundeffect
-        }
-
-
 }
 
 void sound::pause(){ //pause music
